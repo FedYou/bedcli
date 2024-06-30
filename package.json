@@ -1,0 +1,12 @@
+{
+  "name": "ybed",
+  "version": "0.0.1",
+  "description": "Minecraft bedrock add-on cli",
+  "type": "module",
+  "bin": {
+    "ybed": "bin/ybed"
+  },
+  "keywords": [],
+  "author": "FedYou",
+  "license": "MIT"
+}
