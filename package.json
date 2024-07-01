@@ -4,9 +4,21 @@
   "description": "Minecraft bedrock add-on cli",
   "type": "module",
   "bin": {
-    "ybed": "bin/ybed"
+    "ybed": "./bin/ybed.js"
   },
-  "keywords": [],
   "author": "FedYou",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "boxen": "^7.1.1",
+    "colors": "^1.4.0",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^9.3.1",
+    "json-obfuscator": "^2.0.2",
+    "uuid": "^10.0.0",
+    "youcache": "^1.0.1",
+    "youfile": "^1.0.5"
+  },
+  "devDependencies": {
+    "esbuild": "^0.21.5"
+  }
 }
