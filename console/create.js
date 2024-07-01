@@ -50,8 +50,7 @@ const questions = [
     name: "language",
     message: messages.input.language,
     choices: command.create.language,
-    when: (answers) =>
-      answers.type === "Script" || answers.type === "Add-on & Script",
+    when: (answers) => answers.type === "scr" || answers.type === "adscr",
     loop: false,
   },
   {
@@ -59,8 +58,7 @@ const questions = [
     name: "dependencies",
     message: messages.input.dependencies,
     choices: command.create.dependencies,
-    when: (answers) =>
-      answers.type === "Script" || answers.type === "Add-on & Script",
+    when: (answers) => answers.type === "scr" || answers.type === "adscr",
     filter: function (input) {
       return input.reduce((acc, choice) => {
         acc[choice] = true;

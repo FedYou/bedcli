@@ -18,14 +18,24 @@
     ],
     "dependencieServerUi": ["0.1.0", "1.0.0", "1.1.0", "1.2.0", "1.3.0-beta"],
     "dependencies": ["@minecraft/server", "@minecraft/server-ui"],
-    "language": ["javascript", "typescript"],
-    "minEngineVersion": ["1.20.0", "1.20.10", "1.20.40", "1.20.60", "1.20.81"],
+    "language": [
+      { "name": "Javascript", "value": "js" },
+      { "name": "Typescript", "value": "ts" }
+    ],
+    "minEngineVersion": [
+      { "name": "1.20.0", "value": [1, 20, 0] },
+      { "name": "1.20.10", "value": [1, 20, 10] },
+      { "name": "1.20.40", "value": [1, 20, 40] },
+      { "name": "1.20.60", "value": [1, 20, 60] },
+      { "name": "1.20.81", "value": [1, 20, 81] },
+      { "name": "1.21.0", "value": [1, 21, 0] }
+    ],
     "typeProject": [
-      "Add-on",
-      "Add-on & Script",
-      "Script",
-      "Resources",
-      "Behavior"
+      { "name": "Add-on", "value": "ad" },
+      { "name": "Add-on & Script", "value": "adscr" },
+      { "name": "Script", "value": "scr" },
+      { "name": "Resources", "value": "rp" },
+      { "name": "Behavior", "value": "bp" }
     ]
   }
 }
