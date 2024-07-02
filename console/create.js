@@ -107,5 +107,5 @@ export default async () => {
   const answers = await inquirer.prompt(questions);
   delete answers.server;
   delete answers.serverUi;
-  console.log(answers);
+  return answers;
 };

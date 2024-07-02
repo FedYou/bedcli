@@ -1,7 +1,7 @@
 {
   "name": "ybed",
   "version": "0.0.1",
-  "description": "Minecraft bedrock add-on cli",
+  "description": "Minecraft bedrock creator cli",
   "type": "module",
   "bin": {
     "ybed": "./bin/ybed.js"
