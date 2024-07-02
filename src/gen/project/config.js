@@ -2,6 +2,7 @@ import { v4 as uuid } from "uuid";
 export default (answers) => {
   const config = {
     project: {
+      type: answers.type,
       name: answers.name.trim(),
       description: answers.description.trim(),
       version: [0, 0, 1],
