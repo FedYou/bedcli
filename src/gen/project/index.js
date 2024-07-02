@@ -3,7 +3,6 @@ import fs from "fs-extra";
 import yfile from "youfile";
 import YCache from "youcache";
 import path from "path";
-import __dirname from "../../../__dirname.js";
 import genConfig from "./config.js";
 import genLang from "./lang.js";
 import genResource from "./resource.js";
@@ -14,7 +13,7 @@ export default (answers) => {
     let projectPath = path.join(process.cwd(), answers.name.trim());
     let cacheProject = new YCache(answers.name.trim());
 
-    const configPath = "ybed.config.json";
+    const configPath = "bedcli.config.json";
     const configData = genConfig(answers);
 
     cacheProject.write.json(configPath, configData, 2);
@@ -40,6 +39,9 @@ export default (answers) => {
     yfile.copy(cacheProject.path, projectPath);
 
     console.log("~Project successfully created".yellow.bold);
+    console.log(`~\t cd ${configData.project.name}/`.white.dim);
+    console.log(`~\t npm install`.white.dim);
+    console.log(`~\t pnpm install`.white.dim);
   } else {
     console.log("~A folder with the same name already exists".red.bold);
   }

@@ -31,13 +31,14 @@ export default (answers) => {
   }
   if (answers.type == "scr" || answers.type == "adscr") {
     let scripts = {
+      entry: `scripts/main.${answers.language == "javascript" ? "js" : "ts"}`,
       language: answers.language,
       dependencies: [],
     };
 
     for (const module in answers.dependencies) {
       scripts.dependencies.push({
-        module: module,
+        module_name: module,
         version: answers.dependencies[module],
       });
     }

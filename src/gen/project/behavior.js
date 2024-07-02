@@ -12,7 +12,7 @@ export default (cache, config) => {
 
   //script
   if (config.project.type == "scr" || config.project.type == "adscr") {
-    let scriptPath = `scripts/main.${config.scripts.language}`;
+    let scriptPath = config.scripts.entry;
     scriptPath = path.join(behavior, scriptPath);
     const contScript = "//Script file main";
     yfile.write.file(scriptPath, contScript);
@@ -20,7 +20,7 @@ export default (cache, config) => {
     // Package
     const packagePath = path.join(cache.path, "package.json");
     config.scripts.dependencies.forEach((e) => {
-      tempPack.dependencies[e.module] = tempPack.list[e.module];
+      tempPack.dependencies[e.module_name] = tempPack.list[e.module_name];
     });
 
     delete tempPack.list;

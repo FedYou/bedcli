@@ -4,16 +4,16 @@
     "description": "",
     "version": "",
     "minEngineVersion": [0, 0, 0],
-    "author": "",
-    "scripts": {
-      "language": "",
-      "dependencies": [
-        {
-          "module": "",
-          "version": ""
-        }
-      ]
-    }
+    "author": ""
+  },
+  "scripts": {
+    "language": "",
+    "dependencies": [
+      {
+        "module": "",
+        "version": ""
+      }
+    ]
   },
   "out": {
     "dev": "",
