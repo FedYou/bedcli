@@ -1,6 +1,8 @@
 import inquirer from "inquirer";
-import messages from "../json/messages.json" assert { type: "json" };
-import command from "../json/commands.json" assert { type: "json" };
+import jsonData from "../json/index.js";
+
+const messages = jsonData.messages;
+const commands = jsonData.commands;
 
 const questions = [
   {
@@ -35,21 +37,21 @@ const questions = [
     type: "list",
     name: "minEngineVersion",
     message: messages.input.minEngineVersion,
-    choices: command.create.minEngineVersion,
+    choices: commands.create.minEngineVersion,
     loop: false,
   },
   {
     type: "list",
     name: "type",
     message: messages.input.typeProject,
-    choices: command.create.typeProject,
+    choices: commands.create.typeProject,
     loop: false,
   },
   {
     type: "list",
     name: "language",
     message: messages.input.language,
-    choices: command.create.language,
+    choices: commands.create.language,
     when: (answers) => answers.type === "scr" || answers.type === "adscr",
     loop: false,
   },
@@ -57,7 +59,7 @@ const questions = [
     type: "checkbox",
     name: "dependencies",
     message: messages.input.dependencies,
-    choices: command.create.dependencies,
+    choices: commands.create.dependencies,
     when: (answers) => answers.type === "scr" || answers.type === "adscr",
     filter: function (input) {
       return input.reduce((acc, choice) => {
@@ -70,8 +72,8 @@ const questions = [
     type: "list",
     name: "server",
     message: messages.input.dependencieServer,
-    choices: command.create.dependencieServer,
-    pageSize: command.create.dependencieServer.length,
+    choices: commands.create.dependencieServer,
+    pageSize: commands.create.dependencieServer.length,
     when: (answers) => {
       if (answers.dependencies && answers.dependencies["@minecraft/server"]) {
         return true;
@@ -87,7 +89,7 @@ const questions = [
     type: "list",
     name: "serverUi",
     message: messages.input["dependencieServerUi"],
-    choices: command.create["dependencieServerUi"],
+    choices: commands.create["dependencieServerUi"],
     when: (answers) => {
       if (
         answers.dependencies &&
