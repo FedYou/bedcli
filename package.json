@@ -1,10 +1,10 @@
 {
-  "name": "ybed",
+  "name": "bedcli",
   "version": "0.0.1",
   "description": "Minecraft bedrock creator cli",
   "type": "module",
   "bin": {
-    "ybed": "./bin/ybed.js"
+    "bedcli": "./bin/bedcli.js"
   },
   "author": "FedYou",
   "license": "MIT",
