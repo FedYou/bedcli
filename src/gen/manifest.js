@@ -1,6 +1,14 @@
+import { PROJECT_TYPES } from "../utils/enum.js";
+
+let PROJECT_TYPE;
+const addScriptDependencies = (target, dependencies) => {
+  dependencies.forEach((e) => target.push(e));
+};
+
 export default (config) => {
-  const list = {};
-  const base = {
+  const manifest = {};
+  PROJECT_TYPE = config.project.type;
+  const BASE = {
     format_version: 2,
     header: {
       description: "pack.description",
@@ -13,12 +21,15 @@ export default (config) => {
     dependencies: [],
   };
 
-  if (config.project.type == "ad" || config.project.type == "adscr") {
+  if (
+    PROJECT_TYPE === PROJECT_TYPES.AD ||
+    PROJECT_TYPE === PROJECT_TYPES.ADSCR
+  ) {
     //0,1<<resource
     //2,3<<data
     //4<<script
-    const rp = JSON.parse(JSON.stringify(base));
-    const bp = JSON.parse(JSON.stringify(base));
+    const rp = JSON.parse(JSON.stringify(BASE));
+    const bp = JSON.parse(JSON.stringify(BASE));
 
     //resources
     rp.header.uuid = config.uuid[0];
@@ -44,7 +55,7 @@ export default (config) => {
       version: config.project.version,
     });
 
-    if (config.project.type == "adscr") {
+    if (PROJECT_TYPE == PROJECT_TYPES.ADSCR) {
       bp.modules.push({
         type: "script",
         language: config.project.language,
@@ -53,34 +64,32 @@ export default (config) => {
         version: config.project.version,
       });
 
-      config.scripts.dependencies.forEach((e) => {
-        bp.dependencies.push(e);
-      });
+      addScriptDependencies(bp.dependencies, config.scripts.dependencies);
     }
 
-    list.behavior = bp;
-    list.resource = rp;
-  } else if (config.project.type == "rp") {
+    manifest.behavior = bp;
+    manifest.resource = rp;
+  } else if (PROJECT_TYPE === PROJECT_TYPES.RP) {
     //0,1<<resource
-    const rp = JSON.parse(JSON.stringify(base));
+    const rp = JSON.parse(JSON.stringify(BASE));
     rp.header.uuid = config.uuid[0];
     rp.modules.push({
       type: "resources",
       uuid: config.uuid[1],
       version: config.project.version,
     });
-    list.resource = rp;
-  } else if (config.project.type == "bp") {
+    manifest.resource = rp;
+  } else if (PROJECT_TYPE === PROJECT_TYPES.BP) {
     //0,1<<data
-    const bp = JSON.parse(JSON.stringify(base));
+    const bp = JSON.parse(JSON.stringify(BASE));
     bp.header.uuid = config.uuid[0];
     bp.modules.push({
       type: "data",
       uuid: config.uuid[1],
       version: config.project.version,
     });
-    list.behavior = bp;
-  } else if (config.project.type == "scr") {
+    manifest.behavior = bp;
+  } else if (PROJECT_TYPE === PROJECT_TYPES.SCR) {
     //0,1<<script
     bp.header.uuid = config.uuid[0];
     bp.modules.push({
@@ -90,12 +99,9 @@ export default (config) => {
       entry: config.scripts.entry,
       version: config.project.version,
     });
+    addScriptDependencies(bp.dependencies, config.scripts.dependencies);
 
-    config.scripts.dependencies.forEach((e) => {
-      bp.dependencies.push(e);
-    });
-    list.behavior = bp;
+    manifest.behavior = bp;
   }
-
-  return list;
+  return manifest;
 };

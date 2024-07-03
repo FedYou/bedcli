@@ -1,12 +1,12 @@
 import create from "./create.js";
 import help from "./help.js";
-import gen from "../src/gen/index.js";
+import genProject from "../src/gen/project/index.js";
 import wacth from "../src/watch/index.js";
 const argv = process.argv.slice(2);
 
 export default async () => {
   if (argv[0] == "create") {
-    gen.project(await create());
+    genProject(await create());
   } else if (argv[0] == "build") {
   } else if (argv[0] == "watch") {
     wacth();
