@@ -1,11 +1,11 @@
 import { PROJECT_TYPES } from "../utils/enum.js";
 
-let PROJECT_TYPE;
-const addScriptDependencies = (target, dependencies) => {
+function addScriptDependencies(target, dependencies) {
   dependencies.forEach((e) => target.push(e));
-};
+}
 
 export default (config) => {
+  const manifest = {};
   const MANIFEST = {
     format_version: 2,
   };
@@ -17,23 +17,36 @@ export default (config) => {
     version: config.project.version,
   };
 
-  PROJECT_TYPE = config.project.type;
+  const PROJECT_TYPE = config.project.type;
   const version = config.project.version;
-  const manifest = {
-    behavior: { ...MANIFEST },
-    resource: { ...MANIFEST },
-  };
 
-  manifest.behavior.header = { ...HEADER };
-  manifest.behavior.metadata = { authors: config.project.authors };
+  if (
+    PROJECT_TYPE === PROJECT_TYPES.AD ||
+    PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
+    PROJECT_TYPE === PROJECT_TYPES.SCR ||
+    PROJECT_TYPE === PROJECT_TYPES.BP
+  ) {
+    manifest.behavior = { ...MANIFEST };
+    manifest.behavior.header = { ...HEADER };
+    manifest.behavior.metadata = { authors: config.project.authors };
+    manifest.behavior.modules = [];
+    manifest.behavior.dependencies = [];
+  }
 
-  manifest.resource.header = { ...HEADER };
-  manifest.resource.metadata = { authors: config.project.authors };
+  if (
+    PROJECT_TYPE === PROJECT_TYPES.AD ||
+    PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
+    PROJECT_TYPE === PROJECT_TYPES.RP
+  ) {
+    manifest.resource.header = { ...HEADER };
+    manifest.resource.metadata = { authors: config.project.authors };
+    manifest.resource.modules = [];
+    manifest.resource.dependencies = [];
+  }
 
-  manifest.resource.modules = [];
-  manifest.behavior.modules = [];
-  manifest.resource.dependencies = [];
-  manifest.behavior.dependencies = [];
+  //
+  // Modules are added for the manifest type
+  //
 
   // Module Resource
   if (
@@ -58,6 +71,7 @@ export default (config) => {
       version,
     });
   }
+
   // Module Script
   if (
     PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
@@ -71,7 +85,11 @@ export default (config) => {
     });
   }
 
-  // Is addon o Script Addon
+  //
+  // Data is added for the type of manifest.
+  //
+
+  // >>Add the necessary data to create a manfest for add-on<<
   if (
     PROJECT_TYPE === PROJECT_TYPES.AD ||
     PROJECT_TYPE === PROJECT_TYPES.ADSCR
@@ -94,16 +112,16 @@ export default (config) => {
       version,
     });
   }
-  // Is Script Addon
+  // >>Add the necessary data to create a manfest for script add-on<<
   if (PROJECT_TYPE === PROJECT_TYPES.ADSCR) {
     manifest.behavior.modules[1].uuid = config.uuid[4];
   }
-  // Is Resource
+  // >>Add the necessary data to create a manfest for resource<<
   if (PROJECT_TYPE === PROJECT_TYPES.RP) {
     manifest.resource.header.uuid = config.uuid[0];
     manifest.resource.modules[0].uuid = config.uuid[1];
   }
-  // Is Behavior & Script
+  // >>Add the necessary data to create a manfest for behavior or script<<
   if (PROJECT_TYPE === PROJECT_TYPES.BP || PROJECT_TYPE === PROJECT_TYPES.SCR) {
     manifest.behavior.header.uuid = config.uuid[0];
     manifest.behavior.modules[0].uuid = config.uuid[1];

@@ -1,12 +1,8 @@
 import yfile from "youfile";
 import existList from "../utils/existList.js";
 import obfuscator from "../utils/obfuscator.js";
+import getJson from "../utils/getJson.js";
 import "../utils/console/index.js";
-
-function getJson(entryPath, func) {
-  const files = yfile.read.dir.getAllExtnameFiles(entryPath, ".json");
-  files.forEach((pathFile) => func(pathFile));
-}
 
 function minify(pathFile) {
   console.new.waitPath("Obfuscated file", pathFile);

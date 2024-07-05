@@ -2,47 +2,57 @@ import "colors";
 import fs from "fs-extra";
 import yfile from "youfile";
 import YCache from "youcache";
-import path from "path";
-import genConfig from "./config.js";
-import genLang from "./lang.js";
-import genResource from "./resource.js";
-import genBehavior from "./behavior.js";
-
+import { join } from "path";
+import lang from "./lang.js";
+import generateConfig from "./config.js";
+import generateResource from "./resource.js";
+import generateBehavior from "./behavior.js";
+import { PROJECT_TYPES } from "../../utils/enum.js";
+import "../../utils/console/index.js";
 export default (answers) => {
-  if (!fs.pathExistsSync(answers.name.trim())) {
-    let projectPath = path.join(process.cwd(), answers.name.trim());
-    let cacheProject = new YCache(answers.name.trim());
+  const PROJECT_TYPE = answers.type;
+  const PROJECT_NAME = answers.name.trim();
+  if (!fs.pathExistsSync(PROJECT_NAME)) {
+    let projectPath = join(process.cwd(), PROJECT_NAME);
+    let cacheProject = new YCache(PROJECT_NAME);
 
     const configPath = "bedcli.config.json";
-    const configData = genConfig(answers);
+    const configData = generateConfig(answers);
 
     cacheProject.write.json(configPath, configData, 2);
 
     if (
-      answers.type == "ad" ||
-      answers.type == "adscr" ||
-      answers.type == "rp"
+      PROJECT_TYPE == PROJECT_TYPES.AD ||
+      PROJECT_TYPE == PROJECT_TYPES.ADSCR ||
+      PROJECT_TYPE == PROJECT_TYPES.RP
     ) {
-      genResource(cacheProject, configData);
+      generateResource(cacheProject, configData);
     }
     if (
-      answers.type == "ad" ||
-      answers.type == "adscr" ||
-      answers.type == "bp" ||
-      answers.type == "scr"
+      PROJECT_TYPE == PROJECT_TYPES.AD ||
+      PROJECT_TYPE == PROJECT_TYPES.ADSCR ||
+      PROJECT_TYPE == PROJECT_TYPES.BP ||
+      PROJECT_TYPE == PROJECT_TYPES.SCR
     ) {
-      genBehavior(cacheProject, configData);
+      generateBehavior(cacheProject, configData);
     }
 
-    genLang(cacheProject.path, configData.project);
+    lang(cacheProject.path, configData.project);
 
     yfile.copy(cacheProject.path, projectPath);
 
-    console.log("~Project successfully created".yellow.bold);
-    console.log(`~\t cd ${configData.project.name}/`.white.dim);
-    console.log(`~\t npm install`.white.dim);
-    console.log(`~\t pnpm install`.white.dim);
+    // Message
+    console.new.check("Project successfully created".yellow);
+    console.new.item(`cd ${configData.project.name}/`);
+
+    if (
+      PROJECT_TYPE == PROJECT_TYPES.SCR ||
+      PROJECT_TYPE == PROJECT_TYPES.ADSCR
+    ) {
+      console.new.item("npm install");
+      console.new.item("pnpm install");
+    }
   } else {
-    console.log("~A folder with the same name already exists".red.bold);
+    console.new.error("A folder with the same name already exists");
   }
 };

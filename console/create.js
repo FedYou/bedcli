@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 import jsonData from "../json/index.js";
-
+import { PROJECT_TYPES } from "../src/utils/enum.js";
 const messages = jsonData.messages;
 const commands = jsonData.commands;
 
@@ -52,7 +52,9 @@ const questions = [
     name: "language",
     message: messages.input.language,
     choices: commands.create.language,
-    when: (answers) => answers.type === "scr" || answers.type === "adscr",
+    when: (answers) =>
+      answers.type === PROJECT_TYPES.SCR ||
+      answers.type === PROJECT_TYPES.ADSCR,
     loop: false,
   },
   {
@@ -60,7 +62,9 @@ const questions = [
     name: "dependencies",
     message: messages.input.dependencies,
     choices: commands.create.dependencies,
-    when: (answers) => answers.type === "scr" || answers.type === "adscr",
+    when: (answers) =>
+      answers.type === PROJECT_TYPES.SCR ||
+      answers.type === PROJECT_TYPES.ADSCR,
     filter: function (input) {
       return input.reduce((acc, choice) => {
         acc[choice] = true;

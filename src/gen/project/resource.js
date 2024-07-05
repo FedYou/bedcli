@@ -1,25 +1,26 @@
 import yfile from "youfile";
-import path from "path";
+import { basename, join } from "path";
 import templates from "../../../templates/index.js";
+import getJson from "../../utils/getJson.js";
 
-const templ = templates.resource;
+function changeName(path, name) {
+  const fileName = basename(path);
+  if (fileName === "item_texture.json" || fileName === "terrain_texture.json") {
+    const content = yfile.read.json(path);
+    content.resource_pack_name = name;
+    yfile.write.json(path, content, 2);
+  }
+}
 
 export default (cache, config) => {
-  ///template
-  const resource = path.join(cache.path, "RP");
+  const resourcePath = join(cache.path, "RP");
+  // >>Template<<
+  const templateResource = templates.resource;
 
-  yfile.copy(templ, resource);
+  yfile.copy(templateResource, resourcePath);
 
-  ///resource_pack_name
-  const files = yfile.read.dir.getAllExtnameFiles(resource, ".json");
-  files.forEach((pathFile) => {
-    if (
-      pathFile.endsWith("item_texture.json") ||
-      pathFile.endsWith("terrain_texture.json")
-    ) {
-      let cont = yfile.read.json(pathFile);
-      cont.resource_pack_name = config.project.name;
-      yfile.write.json(pathFile, cont, 2);
-    }
+  /// >>Change resource_pack_name<<
+  getJson(resourcePath, (pathFile) => {
+    changeName(pathFile, config.project.name);
   });
 };

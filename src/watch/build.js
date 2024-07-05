@@ -1,4 +1,3 @@
-import yfile from "youfile";
 import path from "path";
 import genManifest from "../gen/manifest.js";
 import esbuild from "../utils/esbuild.js";
@@ -55,7 +54,8 @@ export default async (config) => {
   if (
     PROJECT_TYPE === PROJECT_TYPES.AD ||
     PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
-    PROJECT_TYPE === PROJECT_TYPES.BP
+    PROJECT_TYPE === PROJECT_TYPES.BP ||
+    PROJECT_TYPE === PROJECT_TYPES.SCR
   ) {
     createManifest(PATH.output.behavior, manifest.behavior);
     // Folders

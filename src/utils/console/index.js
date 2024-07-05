@@ -6,6 +6,7 @@ import wait from "./wait.js";
 import waitPath from "./waitPath.js";
 import line from "./line.js";
 import clearLine from "./clearLine.js";
+import item from "./item.js";
 
 const functions = {
   check,
@@ -13,6 +14,7 @@ const functions = {
   error,
   line,
   clearLine,
+  item,
 };
 console.new = functions;
 
