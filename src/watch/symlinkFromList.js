@@ -1,5 +1,4 @@
 import fs from "fs-extra";
-import { join } from "path";
 import existList from "../utils/existList.js";
 
 export default ({ list, project: { path, output } }) => {

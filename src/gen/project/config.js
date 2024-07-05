@@ -9,13 +9,23 @@ export default (answers) => {
       description: answers.description.trim(),
       version: [0, 0, 1],
       minEngineVersion: answers.minEngineVersion,
-      author: answers.author.trim(),
+      authors: [],
+      obfuscator: false,
     },
     scripts: "",
     output: {},
     uuid: [],
   };
   const PROJECT_TYPE = answers.type;
+  // Authors
+
+  if (answers.authors.includes(",")) {
+    answers.authors.split(",").forEach((author) => {
+      config.project.authors.push(author.trim());
+    });
+  } else {
+    config.project.authors.push(answers.authors.trim());
+  }
 
   // Scripts Api
 

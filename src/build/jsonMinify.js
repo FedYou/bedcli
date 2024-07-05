@@ -11,8 +11,8 @@ function message(path) {
 
 export default (path) => {
   const msg = message(path);
-  console.time(msg);
+
   yfile.write.json(path, yfile.read.json5(path));
   clearLine();
-  console.timeEnd(msg);
+  console.log(msg);
 };

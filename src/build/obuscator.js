@@ -16,10 +16,9 @@ function func(entryPath) {
   const files = yfile.read.dir.getAllExtnameFiles(entryPath, ".json");
   files.forEach((pathFile) => {
     const msg = message(pathFile);
-    console.time(msg);
     yfile.write.file(pathFile, obfuscator.encode(yfile.read.file(pathFile)));
     clearLine();
-    console.timeEnd(msg);
+    console.log(msg);
   });
 }
 

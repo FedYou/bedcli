@@ -1,10 +1,9 @@
 import yfile from "youfile";
 import path from "path";
-import error from "../utils/error.js";
 import genManifest from "../gen/manifest.js";
 import esbuild from "../utils/esbuild.js";
 import symlinkFromList from "./symlinkFromList.js";
-
+import createManifest from "../utils/createManifest.js";
 import {
   PROJECT_TYPES,
   FOLDERS_BEHAVIOR,
@@ -12,10 +11,6 @@ import {
   FILES_BEHAVIOR,
   FILES_RESOURCE,
 } from "../utils/enum.js";
-
-function createManifest(output, content) {
-  yfile.write.json(path.join(output, "manifest.json"), content);
-}
 
 export default async (config) => {
   const PROJECT_TYPE = config.project.type;
@@ -27,8 +22,8 @@ export default async (config) => {
       behavior: path.join(process.cwd(), "BP"),
     },
     output: {
-      resource: path.join(config.out.resource, "RP"),
-      behavior: path.join(config.out.behavior, "BP"),
+      resource: path.join(config.output.resource, "RP"),
+      behavior: path.join(config.output.behavior, "BP"),
     },
   };
 

@@ -2,7 +2,7 @@
   "input": {
     "projectName": "Project name:",
     "projectDescription": "Project description:",
-    "author": "Author's name:",
+    "author": "Name of author(s) [Comma separated]:",
     "minEngineVersion": "Min engine version:",
     "typeProject": "Project type:",
     "language": "Language:",
@@ -12,7 +12,7 @@
   },
   "validate": {
     "projectName": "The project name cannot be empty or contain only spaces.",
-    "author": "The author's name cannot be empty or contain only spaces.",
+    "author": "The name(s) of the author(s) cannot be empty or contain only spaces.",
     "dependencies": "You must select at least one dependency."
   }
 }

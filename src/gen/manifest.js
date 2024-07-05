@@ -10,6 +10,9 @@ export default (config) => {
   PROJECT_TYPE = config.project.type;
   const BASE = {
     format_version: 2,
+    metadata: {
+      authors: config.project.authors,
+    },
     header: {
       description: "pack.description",
       name: "pack.name",

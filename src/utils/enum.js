@@ -41,7 +41,7 @@ const FILES_RESOURCE = [
 ];
 const FILES_BEHAVIOR = ["pack_icon.png"];
 const BUILD_IGNORED = ["node_modules", "dist"];
-
+const DEPENDECIES = ["@minecraft/server", "@minecraft/server-ui"];
 export {
   PROJECT_TYPES,
   FOLDERS_BEHAVIOR,
@@ -51,4 +51,5 @@ export {
   BUILD_IGNORED,
   FOLDERS_BEHAVIOR_OBFUSCATOR,
   FOLDERS_RESOURCE_OBFUSCATOR,
+  DEPENDECIES,
 };

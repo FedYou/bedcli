@@ -1,5 +1,5 @@
-import youfile from "youfile";
+import yfile from "youfile";
 import { join } from "path";
 export default (output, content) => {
-  youfile.write.json(join(output, "manifest.json"), content);
+  yfile.write.json(join(output, "manifest.json"), content);
 };

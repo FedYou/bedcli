@@ -1,12 +1,12 @@
 import esbuild from "esbuild";
-
+import { DEPENDECIES } from "./enum.js";
 export default (entry, outfile) => {
   esbuild.build({
     entryPoints: [entry],
     bundle: true,
     minify: true,
     outfile,
-    external: ["@minecraft/server", "@minecraft/server-ui"],
+    external: DEPENDECIES,
     format: "esm",
   });
 };

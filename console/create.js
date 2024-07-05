@@ -23,7 +23,7 @@ const questions = [
   },
   {
     type: "input",
-    name: "author",
+    name: "authors",
     message: messages.input.author,
     validate: function (input) {
       if (input.trim().length === 0) {
