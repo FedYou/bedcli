@@ -6,105 +6,112 @@ const addScriptDependencies = (target, dependencies) => {
 };
 
 export default (config) => {
-  const manifest = {};
-  PROJECT_TYPE = config.project.type;
-  const BASE = {
+  const MANIFEST = {
     format_version: 2,
-    metadata: {
-      authors: config.project.authors,
-    },
-    header: {
-      description: "pack.description",
-      name: "pack.name",
-      uuid: "",
-      min_engine_version: config.project.minEngineVersion,
-      version: config.project.version,
-    },
-    modules: [],
-    dependencies: [],
   };
 
+  const HEADER = {
+    description: "pack.description",
+    name: "pack.name",
+    min_engine_version: config.project.minEngineVersion,
+    version: config.project.version,
+  };
+
+  PROJECT_TYPE = config.project.type;
+  const version = config.project.version;
+  const manifest = {
+    behavior: { ...MANIFEST },
+    resource: { ...MANIFEST },
+  };
+
+  manifest.behavior.header = { ...HEADER };
+  manifest.behavior.metadata = { authors: config.project.authors };
+
+  manifest.resource.header = { ...HEADER };
+  manifest.resource.metadata = { authors: config.project.authors };
+
+  manifest.resource.modules = [];
+  manifest.behavior.modules = [];
+  manifest.resource.dependencies = [];
+  manifest.behavior.dependencies = [];
+
+  // Module Resource
+  if (
+    PROJECT_TYPE === PROJECT_TYPES.AD ||
+    PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
+    PROJECT_TYPE === PROJECT_TYPES.RP
+  ) {
+    manifest.resource.modules.push({
+      type: "resources",
+      version,
+    });
+  }
+
+  // Module Behavior
+  if (
+    PROJECT_TYPE === PROJECT_TYPES.AD ||
+    PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
+    PROJECT_TYPE === PROJECT_TYPES.BP
+  ) {
+    manifest.behavior.modules.push({
+      type: "data",
+      version,
+    });
+  }
+  // Module Script
+  if (
+    PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
+    PROJECT_TYPE === PROJECT_TYPES.SCR
+  ) {
+    manifest.behavior.modules.push({
+      type: "script",
+      language: config.scripts.language,
+      entry: config.scripts.entry,
+      version,
+    });
+  }
+
+  // Is addon o Script Addon
   if (
     PROJECT_TYPE === PROJECT_TYPES.AD ||
     PROJECT_TYPE === PROJECT_TYPES.ADSCR
   ) {
-    //0,1<<resource
-    //2,3<<data
-    //4<<script
-    const rp = JSON.parse(JSON.stringify(BASE));
-    const bp = JSON.parse(JSON.stringify(BASE));
+    manifest.resource.header.uuid = config.uuid[0];
+    manifest.resource.modules[0].uuid = config.uuid[1];
+    manifest.behavior.header.uuid = config.uuid[2];
+    manifest.behavior.modules[0].uuid = config.uuid[3];
 
-    //resources
-    rp.header.uuid = config.uuid[0];
-    rp.modules.push({
-      type: "resources",
-      uuid: config.uuid[1],
-      version: config.project.version,
-    });
-    rp.dependencies.push({
+    // Dependecie Resource
+    manifest.resource.dependencies.push({
       uuid: config.uuid[2],
-      version: config.project.version,
+      version,
     });
 
-    //data
-    bp.header.uuid = config.uuid[2];
-    bp.modules.push({
-      type: "data",
-      uuid: config.uuid[3],
-      version: config.project.version,
-    });
-    bp.dependencies.push({
+    // Dependecie Behavior
+
+    manifest.behavior.dependencies.push({
       uuid: config.uuid[0],
-      version: config.project.version,
+      version,
     });
-
-    if (PROJECT_TYPE == PROJECT_TYPES.ADSCR) {
-      bp.modules.push({
-        type: "script",
-        language: config.project.language,
-        uuid: config.uuid[4],
-        entry: config.scripts.entry,
-        version: config.project.version,
-      });
-
-      addScriptDependencies(bp.dependencies, config.scripts.dependencies);
-    }
-
-    manifest.behavior = bp;
-    manifest.resource = rp;
-  } else if (PROJECT_TYPE === PROJECT_TYPES.RP) {
-    //0,1<<resource
-    const rp = JSON.parse(JSON.stringify(BASE));
-    rp.header.uuid = config.uuid[0];
-    rp.modules.push({
-      type: "resources",
-      uuid: config.uuid[1],
-      version: config.project.version,
-    });
-    manifest.resource = rp;
-  } else if (PROJECT_TYPE === PROJECT_TYPES.BP) {
-    //0,1<<data
-    const bp = JSON.parse(JSON.stringify(BASE));
-    bp.header.uuid = config.uuid[0];
-    bp.modules.push({
-      type: "data",
-      uuid: config.uuid[1],
-      version: config.project.version,
-    });
-    manifest.behavior = bp;
-  } else if (PROJECT_TYPE === PROJECT_TYPES.SCR) {
-    //0,1<<script
-    bp.header.uuid = config.uuid[0];
-    bp.modules.push({
-      type: "script",
-      language: config.project.language,
-      uuid: config.uuid[4],
-      entry: config.scripts.entry,
-      version: config.project.version,
-    });
-    addScriptDependencies(bp.dependencies, config.scripts.dependencies);
-
-    manifest.behavior = bp;
   }
+  // Is Script Addon
+  if (PROJECT_TYPE === PROJECT_TYPES.ADSCR) {
+    manifest.behavior.modules[1].uuid = config.uuid[4];
+  }
+  // Is Resource
+  if (PROJECT_TYPE === PROJECT_TYPES.RP) {
+    manifest.resource.header.uuid = config.uuid[0];
+    manifest.resource.modules[0].uuid = config.uuid[1];
+  }
+  // Is Behavior & Script
+  if (PROJECT_TYPE === PROJECT_TYPES.BP || PROJECT_TYPE === PROJECT_TYPES.SCR) {
+    manifest.behavior.header.uuid = config.uuid[0];
+    manifest.behavior.modules[0].uuid = config.uuid[1];
+  }
+  addScriptDependencies(
+    manifest.behavior.dependencies,
+    config.scripts.dependencies
+  );
+
   return manifest;
 };

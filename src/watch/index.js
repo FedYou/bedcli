@@ -4,8 +4,7 @@ import build from "./build.js";
 import regExpPath from "../utils/regExpPath.js";
 import { BUILD_IGNORED } from "../utils/enum.js";
 import verifyReadConfig from "../utils/verifyReadConfig.js";
-import message from "./message.js";
-
+import "../utils/console/index.js";
 const WACTH_DEALY = 500;
 let CONFIG;
 let DEBOUNCE_TIMEOUT = null;
@@ -15,11 +14,9 @@ function wacth(path, event) {
 
   DEBOUNCE_TIMEOUT = setTimeout(() => {
     console.clear();
-    message.building(event, path);
-    console.time(message.build());
+    console.new.waitPath(`There was a ${event.yellow} in the path`, path);
     build(CONFIG);
-    console.timeEnd(message.build());
-
+    console.new.check("Build done correctly.".green);
     DEBOUNCE_TIMEOUT = null;
   }, WACTH_DEALY);
 }
@@ -27,7 +24,11 @@ function wacth(path, event) {
 export default () => {
   CONFIG = verifyReadConfig();
 
-  const ignored = [...BUILD_IGNORED, CONFIG.out.behavior, CONFIG.out.resource];
+  const ignored = [
+    ...BUILD_IGNORED,
+    CONFIG.output.behavior,
+    CONFIG.output.resource,
+  ];
 
   const wacthOptions = {
     ignored: regExpPath(ignored),

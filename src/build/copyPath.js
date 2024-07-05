@@ -1,24 +1,18 @@
 import yfile from "youfile";
 import existList from "../utils/existList.js";
-import clearLine from "../utils/clearLine.js";
-import { basename } from "path";
-function message(path) {
-  path = basename(path);
-  console.log(`${" - ".black.bgWhite} Reading path`.dim.bold, path.dim.red);
-  const text = `${" ✓ ".bgGreen} Path read ${path.red}`.bold;
+import "../utils/console/index.js";
 
-  return text;
+function func(entryPath, outputPath) {
+  console.new.waitPath("Reading path", outputPath);
+  yfile.copy(entryPath, outputPath);
+  console.new.clearLine();
+  console.new.checkPath("Path read", outputPath);
 }
 
 export default ({ list, project: { output, path } }) => {
   existList({
     list,
     project: { output, path },
-    func: (entryPath, outputPath) => {
-      const msg = message(entryPath);
-      yfile.copy(entryPath, outputPath);
-      clearLine();
-      console.log(msg);
-    },
+    func,
   });
 };

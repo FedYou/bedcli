@@ -1,25 +1,22 @@
 import yfile from "youfile";
 import existList from "../utils/existList.js";
 import obfuscator from "../utils/obfuscator.js";
-import { basename } from "path";
-import clearLine from "../utils/clearLine.js";
+import "../utils/console/index.js";
 
-function message(path) {
-  path = basename(path);
-  console.log(`${" - ".black.bgWhite} Obfuscating file`.dim.bold, path.dim.red);
-  const text = `${" ✓ ".bgGreen} Obfuscated file ${path.red}`.bold;
+function getJson(entryPath, func) {
+  const files = yfile.read.dir.getAllExtnameFiles(entryPath, ".json");
+  files.forEach((pathFile) => func(pathFile));
+}
 
-  return text;
+function minify(pathFile) {
+  console.new.waitPath("Obfuscated file", pathFile);
+  yfile.write.file(pathFile, obfuscator.encode(yfile.read.file(pathFile)));
+  console.new.clearLine();
+  console.new.checkPath("Obfuscated file", pathFile);
 }
 
 function func(entryPath) {
-  const files = yfile.read.dir.getAllExtnameFiles(entryPath, ".json");
-  files.forEach((pathFile) => {
-    const msg = message(pathFile);
-    yfile.write.file(pathFile, obfuscator.encode(yfile.read.file(pathFile)));
-    clearLine();
-    console.log(msg);
-  });
+  getJson(entryPath, minify);
 }
 
 export default (list, path) => {
