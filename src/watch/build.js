@@ -19,9 +19,6 @@ function createManifest(output, content) {
 
 export default async (config) => {
   const PROJECT_TYPE = config.project.type;
-  if (!Object.values(PROJECT_TYPES).includes(PROJECT_TYPE)) {
-    error(`Type of project unknown >>${PROJECT_TYPE.yellow}<<`);
-  }
   const manifest = genManifest(config);
 
   const PATH = {
@@ -30,8 +27,8 @@ export default async (config) => {
       behavior: path.join(process.cwd(), "BP"),
     },
     output: {
-      resource: path.join(config.out.dev, "RP"),
-      behavior: path.join(config.out.dev, "BP"),
+      resource: path.join(config.out.resource, "RP"),
+      behavior: path.join(config.out.behavior, "BP"),
     },
   };
 

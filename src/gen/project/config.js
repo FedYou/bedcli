@@ -1,4 +1,6 @@
 import { v4 as uuid } from "uuid";
+import { PROJECT_TYPES } from "../../utils/enum.js";
+
 export default (answers) => {
   const config = {
     project: {
@@ -10,28 +12,21 @@ export default (answers) => {
       author: answers.author.trim(),
     },
     scripts: "",
-    out: {
-      dev: "dist/dev",
-      production: "dist/product",
-    },
+    output: {},
     uuid: [],
   };
-  let uuidAmount = 0;
+  const PROJECT_TYPE = answers.type;
 
-  if (answers.type == "ad") {
-    uuidAmount = 4;
-  } else if (answers.type == "adscr") {
-    uuidAmount = 5;
-  } else if (
-    answers.type == "scr" ||
-    answers.type == "rp" ||
-    answers.type == "bp"
+  // Scripts Api
+
+  if (
+    PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
+    PROJECT_TYPE === PROJECT_TYPES.SCR
   ) {
-    uuidAmount = 2;
-  }
-  if (answers.type == "scr" || answers.type == "adscr") {
+    const extnameScript = answers.language == "javascript" ? "js" : "ts";
+
     let scripts = {
-      entry: `scripts/main.${answers.language == "javascript" ? "js" : "ts"}`,
+      entry: `scripts/main.${extnameScript}`,
       language: answers.language,
       dependencies: [],
     };
@@ -42,12 +37,49 @@ export default (answers) => {
         version: answers.dependencies[module],
       });
     }
-    config.scripts = scripts;
+    config.scripts = { ...scripts };
   } else {
     delete config.scripts;
   }
+
+  // Output Project
+  const output = {};
+
+  if (
+    PROJECT_TYPE === PROJECT_TYPES.AD ||
+    PROJECT_TYPE === PROJECT_TYPES.BP ||
+    PROJECT_TYPE === PROJECT_TYPES.SCR ||
+    PROJECT_TYPE === PROJECT_TYPES.ADSCR
+  ) {
+    output.behavior = "dist/behavior";
+  }
+  if (
+    PROJECT_TYPE === PROJECT_TYPES.AD ||
+    PROJECT_TYPE === PROJECT_TYPES.RP ||
+    PROJECT_TYPE === PROJECT_TYPES.ADSCR
+  ) {
+    output.resource = "dist/resource";
+  }
+
+  config.output = { ...output };
+
+  let uuidAmount = 0;
+  // Uuid Amount for types
+  if (
+    PROJECT_TYPE === PROJECT_TYPES.SCR ||
+    PROJECT_TYPE === PROJECT_TYPES.RP ||
+    PROJECT_TYPE === PROJECT_TYPES.BP
+  ) {
+    uuidAmount = 2;
+  } else if (PROJECT_TYPE === PROJECT_TYPES.AD) {
+    uuidAmount = 4;
+  } else if (PROJECT_TYPE === PROJECT_TYPES.ADSCR) {
+    uuidAmount = 5;
+  }
+
   for (let x = 0; x < uuidAmount; x++) {
     config.uuid.push(uuid());
   }
+
   return config;
 };

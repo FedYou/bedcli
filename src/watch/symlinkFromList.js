@@ -1,14 +1,14 @@
 import fs from "fs-extra";
 import { join } from "path";
+import existList from "../utils/existList.js";
 
 export default ({ list, project: { path, output } }) => {
-  list.forEach((name) => {
-    let entryPath = join(path, name);
-
-    if (!fs.existsSync(entryPath)) return;
-    const outputPath = join(output, name);
-
-    if (fs.existsSync(outputPath)) return;
-    fs.symlinkSync(entryPath, outputPath);
+  existList({
+    list,
+    project: { output, path },
+    func: (entryPath, outputPath) => {
+      if (fs.existsSync(outputPath)) return;
+      fs.symlinkSync(entryPath, outputPath);
+    },
   });
 };

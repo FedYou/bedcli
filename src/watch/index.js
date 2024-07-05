@@ -7,7 +7,7 @@ import verifyReadConfig from "../utils/verifyReadConfig.js";
 import message from "./message.js";
 
 const WACTH_DEALY = 500;
-let config;
+let CONFIG;
 let DEBOUNCE_TIMEOUT = null;
 
 function wacth(path, event) {
@@ -17,7 +17,7 @@ function wacth(path, event) {
     console.clear();
     message.building(event, path);
     console.time(message.build());
-    build(config);
+    build(CONFIG);
     console.timeEnd(message.build());
 
     DEBOUNCE_TIMEOUT = null;
@@ -25,9 +25,9 @@ function wacth(path, event) {
 }
 
 export default () => {
-  config = verifyReadConfig();
+  CONFIG = verifyReadConfig();
 
-  const ignored = [...BUILD_IGNORED, config.out.dev];
+  const ignored = [...BUILD_IGNORED, CONFIG.out.behavior, CONFIG.out.resource];
 
   const wacthOptions = {
     ignored: regExpPath(ignored),

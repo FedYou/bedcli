@@ -16,6 +16,8 @@ const FOLDERS_BEHAVIOR = [
   "texts",
   "structures",
 ];
+const FOLDERS_BEHAVIOR_OBFUSCATOR = ["entities", "items", "blocks"];
+const FOLDERS_RESOURCE_OBFUSCATOR = ["ui"];
 const FOLDERS_RESOURCE = [
   "animation_controllers",
   "animations",
@@ -47,4 +49,6 @@ export {
   FILES_RESOURCE,
   FILES_BEHAVIOR,
   BUILD_IGNORED,
+  FOLDERS_BEHAVIOR_OBFUSCATOR,
+  FOLDERS_RESOURCE_OBFUSCATOR,
 };
