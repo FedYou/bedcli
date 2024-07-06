@@ -15,7 +15,7 @@ Manage your `add-ons`, `textures` and `Scripts` projects easily.
 ### Installation
 
 ```bash
-npm install https://github.com/FedYou/bedcli.git -g
+npm install bedcli -g
 ```
 
 ### Use

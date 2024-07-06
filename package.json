@@ -8,6 +8,20 @@
   },
   "author": "FedYou",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FedYou/bedcli.git"
+  },
+  "keywords": [
+    "minecraft",
+    "minecraft bedrock",
+    "creator",
+    "bedcli",
+    "creator tool",
+    "add-on",
+    "texture",
+    "script api"
+  ],
   "dependencies": {
     "archiver": "^7.0.1",
     "chokidar": "^3.6.0",

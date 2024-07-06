@@ -13,7 +13,7 @@ Maneja tus proyectos de `add-ons`, `texturas` y `Scripts` de forma fácil.
 ### Instalación
 
 ```bash
-npm install https://github.com/FedYou/bedcli.git -g
+npm install bedcli -g
 ```
 
 ### Uso
