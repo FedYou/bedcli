@@ -1,57 +1,57 @@
 # Bedcli
 
-[English](readme.en.md)
+[Español](readme.es.md)
 
-Maneja tus proyectos de `add-ons`, `texturas` y `Scripts` de forma fácil.
+Manage your `add-ons`, `textures` and `Scripts` projects easily.
 
-### Caracteristicas
+### Features
 
-- Permite hacer build de tu proyecto con minificado.
+- Allows you to build your project with minification.
 
-- Ofusca tu proyecto para que no sea tan fácil de robar su código.
+- Obfuscate your project so that it is not so easy to steal your code.
 
-- Usa `esbuild` para el minificado de los archivos `.js` de forma rápida.
+- Use `esbuild` to minify `.js` files quickly.
 
-### Instalación
+### Installation
 
 ```bash
 npm install https://github.com/FedYou/bedcli.git -g
 ```
 
-### Uso
+### Use
 
 ```bash
 bedcli <command>
 ```
 
-### Comandos
+### Commands
 
-- `create` : Crea un nuevo proyecto.
+- `create` : Create a new project.
 
-- `build`: Empaqueta tu proyecto en `.mcpack`
+- `build`: Package your project in `.mcpack`.
 
-- `watch`: Permite hacer pruebas en tiempo real con cada cambio.
+- `watch`: Allows you to test in real time with each change.
 
-- `help`: Obtiene una lista de los comandos con una breve descripción.
+- `help`: Gets a list of commands with a brief description.
 
-### Configuración
+### Configuration
 
 ```json
 {
   "project": {
-    "type": "adscr", // Tipo de proyecto. ad=add-on, adscr= add-on & script, bp=behavior, rp=resource, scr=script
-    "name": "My Project", //Nombre del proyecto (!No usar espacios al final y comienzo)
-    "description": "My description", // Descripción del proyecto
-    "version": [0, 0, 1], // Versión de proyecto.
-    "minEngineVersion": [1, 20, 60], // Versión mínima del juego.
-    "authors": ["Author"], // Nombre del autor o autores
-    "obfuscator": false // Si se Ofusca (!Puede hacer tu proyecto más pesado)
+    "type": "adscr", // Type of project. ad=add-on, adscr= add-on & script, bp=behavior, rp=resource, scr=script
+    "name": "My Project", //Name of the project (!Do not use spaces at the end and at the beginning)
+    "description": "My description", // Project description
+    "version": [0, 0, 1], // Project version.
+    "minEngineVersion": [1, 20, 60], // Minimum version of the game.
+    "authors": ["Author"], // Name of the author(s).
+    "obfuscator": false // If it obfuscates (!It can make your project heavier).
   },
   "scripts": {
-    "entry": "scripts/main.js", // Ruta del archivo javascript dentro del "BP"
-    "language": "javascript", // Lenguaje a usar javascript o typescript
+    "entry": "scripts/main.js", // Path to the javascript file inside the "BP".
+    "language": "javascript", // Language to use javascript or typescript.
     "dependencies": [
-      // Solo se admite estas 2 dependencias por el momento.
+      // Only these 2 dependencies are supported at the moment.
       {
         "module_name": "@minecraft/server",
         "version": "1.11.0"
@@ -63,16 +63,16 @@ bedcli <command>
     ]
   },
   "output": {
-    // Las carpetas donde se guardara un build rápido para hacer pruebas.
-    "behavior": "dist/behavior", // Ejemplo ...games/com.mojang/development_behavior_packs
-    "resource": "dist/resource" // Ejemplo ...games/com.mojang/development_resource_packs
+    // The folders where a quick build will be saved for testing.
+    "behavior": "dist/behavior", // Example ...games/com.mojang/development_behavior_packs
+    "resource": "dist/resource" // Example ...games/com.mojang/development_resource_packs
   },
   "uuid": [
-    // Lista de los uuid del proyecto (!No tocar)
+    // List of project uuids (!Do not touch).
   ]
 }
 ```
 
 ### Build
 
-Por el momento no se puede agregar archivos externos como licencias al `build`, pero próximamente se agregara esta función.
+At the moment it is not possible to add external files as licenses to the `build`, but this feature will be added soon.
