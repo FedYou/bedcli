@@ -6,6 +6,7 @@ import esbuild from "../utils/esbuild.js";
 import generateManifest from "../gen/manifest.js";
 import createManifest from "../utils/createManifest.js";
 import verifyReadConfig from "../utils/verifyReadConfig.js";
+import verifyFolders from "../utils/verifyFolders.js";
 import copyPath from "./copyPath.js";
 import obuscator from "./obuscator.js";
 import minify from "./minify.js";
@@ -23,6 +24,7 @@ import {
 export default () => {
   const cache = new YCache("bedcli");
   const config = verifyReadConfig();
+  verifyFolders(config);
   const manifest = generateManifest(config);
   const PROJECT_TYPE = config.project.type;
 

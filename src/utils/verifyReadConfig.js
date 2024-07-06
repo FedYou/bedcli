@@ -1,15 +1,16 @@
 import yfile from "youfile";
-import error from "./error.js";
+import "../utils/console/index.js";
 import { PROJECT_TYPES } from "./enum.js";
 
 export default () => {
   try {
     const config = yfile.read.json("bedcli.config.json");
-    if (!Object.values(PROJECT_TYPES).includes(config.project.type)) {
-      error(`Type of project unknown >>${config.project.type.yellow}<<`);
+    const PROJECT_TYPE = config.project.type;
+    if (!Object.values(PROJECT_TYPES).includes(PROJECT_TYPE)) {
+      console.new.error(`Type of project unknown >>${PROJECT_TYPE.yellow}<<`);
     }
     return config;
   } catch (e) {
-    error('"bedcli.config.json" was not found.');
+    console.new.error('"bedcli.config.json" was not found.');
   }
 };

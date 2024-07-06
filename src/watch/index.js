@@ -4,6 +4,7 @@ import build from "./build.js";
 import regExpPath from "../utils/regExpPath.js";
 import { BUILD_IGNORED } from "../utils/enum.js";
 import verifyReadConfig from "../utils/verifyReadConfig.js";
+import verifyFolders from "../utils/verifyFolders.js";
 import "../utils/console/index.js";
 const WACTH_DEALY = 500;
 let CONFIG;
@@ -23,7 +24,7 @@ function wacth(path, event) {
 
 export default () => {
   CONFIG = verifyReadConfig();
-
+  verifyFolders(CONFIG);
   const ignored = [
     ...BUILD_IGNORED,
     CONFIG.output.behavior,

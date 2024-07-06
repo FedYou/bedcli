@@ -38,6 +38,7 @@ export default (config) => {
     PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
     PROJECT_TYPE === PROJECT_TYPES.RP
   ) {
+    manifest.resource = { ...MANIFEST };
     manifest.resource.header = { ...HEADER };
     manifest.resource.metadata = { authors: config.project.authors };
     manifest.resource.modules = [];

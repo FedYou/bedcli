@@ -1,5 +1,5 @@
 import "colors";
-import error from "../error.js";
+import error from "./error.js";
 import check from "./check.js";
 import checkPath from "./checkPath.js";
 import wait from "./wait.js";
