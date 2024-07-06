@@ -10,9 +10,12 @@ export default (answers) => {
       version: [0, 0, 1],
       minEngineVersion: answers.minEngineVersion,
       authors: [],
-      obfuscator: false,
     },
     scripts: "",
+    build: {
+      obfuscator: false,
+      external: [],
+    },
     output: {},
     uuid: [],
   };

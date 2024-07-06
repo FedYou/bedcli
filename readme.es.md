@@ -1,14 +1,14 @@
 # Bedcli
 
-Maneja tus proyectos de `add-ons`, `texturas` y `Scripts` de forma fácil.
+Maneja tus proyectos de `add-ons`, `texturas` y `Scripts` fácilmente.
 
 ### Caracteristicas
 
-- Permite hacer build de tu proyecto con minificado.
+- Permite hacer build de tu proyecto con minificación.
 
 - Ofusca tu proyecto para que no sea tan fácil de robar su código.
 
-- Usa `esbuild` para el minificado de los archivos `.js` de forma rápida.
+- Usa `esbuild` para el minificación de los archivos `.js` de forma rápida.
 
 ### Instalación
 
@@ -38,16 +38,15 @@ bedcli <command>
 {
   "project": {
     "type": "adscr", // Tipo de proyecto. ad=add-on, adscr= add-on & script, bp=behavior, rp=resource, scr=script
-    "name": "My Project", //Nombre del proyecto (!No usar espacios al final y comienzo)
+    "name": "My Project", //Nombre del proyecto (No usar espacios al final y comienzo)
     "description": "My description", // Descripción del proyecto
     "version": [0, 0, 1], // Versión de proyecto.
     "minEngineVersion": [1, 20, 60], // Versión mínima del juego.
-    "authors": ["Author"], // Nombre del autor o autores
-    "obfuscator": false // Si se Ofusca (!Puede hacer tu proyecto más pesado)
+    "authors": ["Author"] // Nombre del autor o autores
   },
   "scripts": {
     "entry": "scripts/main.js", // Ruta del archivo javascript dentro del "BP"
-    "language": "javascript", // Lenguaje a usar javascript o typescript
+    "language": "javascript", // Lenguaje a usar: javascript o typescript
     "dependencies": [
       // Solo se admite estas 2 dependencias por el momento.
       {
@@ -60,17 +59,17 @@ bedcli <command>
       }
     ]
   },
+  "build": {
+    "obfuscator": false, // Si se Ofusca (Puede hacer tu proyecto más pesado)
+    "external": ["LICENSE"] // Agrega archivos externos al "build" que esten dentro de la carpeta del proyecto.
+  },
   "output": {
     // Las carpetas donde se guardara un build rápido para hacer pruebas.
     "behavior": "dist/behavior", // Ejemplo ...games/com.mojang/development_behavior_packs
     "resource": "dist/resource" // Ejemplo ...games/com.mojang/development_resource_packs
   },
   "uuid": [
-    // Lista de los uuid del proyecto (!No tocar)
+    // Lista de los uuids del proyecto (No modificar)
   ]
 }
 ```
-
-### Build
-
-Por el momento no se puede agregar archivos externos como licencias al `build`, pero próximamente se agregara esta función.

@@ -20,6 +20,8 @@ import {
   FOLDERS_BEHAVIOR_OBFUSCATOR,
   FOLDERS_RESOURCE_OBFUSCATOR,
 } from "../utils/enum.js";
+import external from "./external.js";
+import fs from "fs-extra";
 
 export default () => {
   const cache = new YCache("bedcli");
@@ -48,7 +50,7 @@ export default () => {
     output: {
       resource: join(config.output.resource, NAME.resource),
       behavior: join(config.output.behavior, NAME.behavior),
-      build: join(process.cwd(), "dist/build"),
+      build: join(process.cwd(), "dist"),
     },
     cache: {
       resource: join(cache.path, NAME.resource),
@@ -112,17 +114,20 @@ export default () => {
     PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
     PROJECT_TYPE === PROJECT_TYPES.SCR
   ) {
-    esbuild(
-      join(PATH.entry.behavior, config.scripts.entry),
-      join(PATH.cache.behavior, config.scripts.entry)
-    );
+    const entry = join(PATH.entry.behavior, config.scripts.entry);
+    const output = join(PATH.cache.behavior, config.scripts.entry);
+    if (!fs.existsSync(entry))
+      console.new.error(`The file "${entry}" does not exist`);
+    esbuild(entry, output);
   }
+  // <<Add external files or folders>>
+  external(config, PATH.cache);
   // <<Minify all json files>>
   console.new.line("Minify");
   minify(cache.path);
 
   // <<Obfuscator of json files in a specific folder>>
-  if (config.obuscator === true) {
+  if (config.build.obuscator === true) {
     console.new.line("Obfuscator");
     obuscator(FOLDERS_BEHAVIOR_OBFUSCATOR, PATH.cache.behavior);
     obuscator(FOLDERS_RESOURCE_OBFUSCATOR, PATH.cache.resource);
