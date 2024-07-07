@@ -15,6 +15,8 @@ const FOLDERS_BEHAVIOR = [
   "blocks",
   "texts",
   "structures",
+  "feature_rules",
+  "features",
 ];
 const FOLDERS_BEHAVIOR_OBFUSCATOR = ["entities", "items", "blocks"];
 const FOLDERS_RESOURCE_OBFUSCATOR = ["ui"];

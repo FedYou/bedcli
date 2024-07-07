@@ -22,8 +22,14 @@ export default async (config) => {
       behavior: join(process.cwd(), "BP"),
     },
     output: {
-      resource: join(config.output.resource || "dist/resource", "RP"),
-      behavior: join(config.output.behavior || "dist/behavior", "BP"),
+      resource: join(
+        config.output.resource || "dist/resource",
+        config.project.name + "-RP"
+      ),
+      behavior: join(
+        config.output.behavior || "dist/behavior",
+        config.project.name + "-BP"
+      ),
     },
   };
 
@@ -87,7 +93,7 @@ export default async (config) => {
       );
     }
     const entry = join(PATH.entry.behavior, config.scripts.entry);
-    const output = join(PATH.output.resource, config.scripts.entry);
+    const output = join(PATH.output.behavior, config.scripts.entry);
     if (!fs.existsSync(entry))
       console.new.error(`The file "${entry}" does not exist`);
     esbuild(entry, output);
