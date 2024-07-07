@@ -1,4 +1,5 @@
-import path from "path";
+import fs from "fs-extra";
+import { join } from "path";
 import genManifest from "../gen/manifest.js";
 import esbuild from "../utils/esbuild.js";
 import symlinkFromList from "./symlinkFromList.js";
@@ -17,12 +18,12 @@ export default async (config) => {
 
   const PATH = {
     entry: {
-      resource: path.join(process.cwd(), "RP"),
-      behavior: path.join(process.cwd(), "BP"),
+      resource: join(process.cwd(), "RP"),
+      behavior: join(process.cwd(), "BP"),
     },
     output: {
-      resource: path.join(config.output.resource, "RP"),
-      behavior: path.join(config.output.behavior, "BP"),
+      resource: join(config.output.resource || "dist/resource", "RP"),
+      behavior: join(config.output.behavior || "dist/behavior", "BP"),
     },
   };
 
@@ -80,9 +81,15 @@ export default async (config) => {
     PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
     PROJECT_TYPE === PROJECT_TYPES.SCR
   ) {
-    esbuild(
-      path.join(PATH.entry.behavior, config.scripts.entry),
-      path.join(PATH.output.resource, config.scripts.entry)
-    );
+    if (!config.scripts.language !== "javascript") {
+      console.new.error(
+        `Error the language "${config.scripts.language}" is not supported`
+      );
+    }
+    const entry = join(PATH.entry.behavior, config.scripts.entry);
+    const output = join(PATH.output.resource, config.scripts.entry);
+    if (!fs.existsSync(entry))
+      console.new.error(`The file "${entry}" does not exist`);
+    esbuild(entry, output);
   }
 };

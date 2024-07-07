@@ -126,11 +126,11 @@ export default (config) => {
   if (PROJECT_TYPE === PROJECT_TYPES.BP || PROJECT_TYPE === PROJECT_TYPES.SCR) {
     manifest.behavior.header.uuid = config.uuid[0];
     manifest.behavior.modules[0].uuid = config.uuid[1];
+    addScriptDependencies(
+      manifest.behavior.dependencies,
+      config.scripts.dependencies
+    );
   }
-  addScriptDependencies(
-    manifest.behavior.dependencies,
-    config.scripts.dependencies
-  );
 
   return manifest;
 };

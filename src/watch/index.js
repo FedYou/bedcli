@@ -27,8 +27,8 @@ export default () => {
   verifyFolders(CONFIG);
   const ignored = [
     ...BUILD_IGNORED,
-    CONFIG.output.behavior,
-    CONFIG.output.resource,
+    CONFIG.output.behavior || "dist/behavior",
+    CONFIG.output.resource || "dist/resource",
   ];
 
   const wacthOptions = {

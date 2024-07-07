@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { PROJECT_TYPES } from "../../utils/enum.js";
-
+import "../../utils/console/index.js";
 export default (answers) => {
   const config = {
     project: {
@@ -36,7 +36,7 @@ export default (answers) => {
     PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
     PROJECT_TYPE === PROJECT_TYPES.SCR
   ) {
-    const extnameScript = answers.language == "javascript" ? "js" : "ts";
+    let extnameScript = "js";
 
     let scripts = {
       entry: `scripts/main.${extnameScript}`,

@@ -48,8 +48,8 @@ export default () => {
       behavior: join(process.cwd(), "BP"),
     },
     output: {
-      resource: join(config.output.resource, NAME.resource),
-      behavior: join(config.output.behavior, NAME.behavior),
+      resource: join(config.output.resource || "dist/resource", NAME.resource),
+      behavior: join(config.output.behavior || "dist/behavior", NAME.behavior),
       build: join(process.cwd(), "dist"),
     },
     cache: {
@@ -114,6 +114,10 @@ export default () => {
     PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
     PROJECT_TYPE === PROJECT_TYPES.SCR
   ) {
+    const language = config.scripts.language;
+    if (language !== "javascript") {
+      console.new.error(`Error the language "${language}" is not supported`);
+    }
     const entry = join(PATH.entry.behavior, config.scripts.entry);
     const output = join(PATH.cache.behavior, config.scripts.entry);
     if (!fs.existsSync(entry))
