@@ -81,7 +81,7 @@ export default async (config) => {
     PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
     PROJECT_TYPE === PROJECT_TYPES.SCR
   ) {
-    if (!config.scripts.language !== "javascript") {
+    if (config.scripts.language !== "javascript") {
       console.new.error(
         `Error the language "${config.scripts.language}" is not supported`
       );
