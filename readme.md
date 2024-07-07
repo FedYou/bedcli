@@ -1,5 +1,7 @@
 # Bedcli
 
+[Español](readme.es.md)
+
 Manage your `add-ons`, `textures`, and `scripts` projects easily.
 
 ### Features
