@@ -46,7 +46,7 @@ bedcli <command>
   },
   "scripts": {
     "entry": "scripts/main.js", // Ruta del archivo javascript dentro del "BP"
-    "language": "javascript", // Lenguaje a usar: javascript o typescript
+    "language": "javascript", // Lenguaje a usar: javascript
     "dependencies": [
       // Solo se admite estas 2 dependencias por el momento.
       {
