@@ -1,6 +1,6 @@
 {
   "name": "bedcli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Minecraft bedrock creator cli",
   "type": "module",
   "bin": {
@@ -30,9 +30,7 @@
     "inquirer": "^9.3.1",
     "uuid": "^10.0.0",
     "youcache": "^1.0.2",
-    "youfile": "^1.0.6"
-  },
-  "devDependencies": {
+    "youfile": "^1.0.6",
     "esbuild": "^0.21.5"
   }
 }
