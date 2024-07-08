@@ -17,6 +17,13 @@ const FOLDERS_BEHAVIOR = [
   "structures",
   "feature_rules",
   "features",
+  "subpacks",
+  "cameras",
+  "dialogue",
+  "dimensions",
+  "functions",
+  "animations",
+  "animation_controllers",
 ];
 const FOLDERS_BEHAVIOR_OBFUSCATOR = ["entities", "items", "blocks"];
 const FOLDERS_RESOURCE_OBFUSCATOR = ["ui"];
@@ -33,6 +40,9 @@ const FOLDERS_RESOURCE = [
   "textures",
   "ui",
   "sounds",
+  "subpacks",
+  "block_culling",
+  "materials",
 ];
 const FILES_RESOURCE = [
   "biomes_client.json",
