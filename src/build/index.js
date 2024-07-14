@@ -8,7 +8,7 @@ import createManifest from "../utils/createManifest.js";
 import verifyReadConfig from "../utils/verifyReadConfig.js";
 import verifyFolders from "../utils/verifyFolders.js";
 import copyPath from "./copyPath.js";
-import obuscator from "./obuscator.js";
+import obfuscator from "./obfuscator.js";
 import minify from "./minify.js";
 import "../utils/console/index.js";
 import {
@@ -131,10 +131,10 @@ export default () => {
   minify(cache.path);
 
   // <<Obfuscator of json files in a specific folder>>
-  if (config.build.obuscator === true) {
+  if (config.build.obfuscator === true) {
     console.new.line("Obfuscator");
-    obuscator(FOLDERS_BEHAVIOR_OBFUSCATOR, PATH.cache.behavior);
-    obuscator(FOLDERS_RESOURCE_OBFUSCATOR, PATH.cache.resource);
+    obfuscator(FOLDERS_BEHAVIOR_OBFUSCATOR, PATH.cache.behavior);
+    obfuscator(FOLDERS_RESOURCE_OBFUSCATOR, PATH.cache.resource);
   }
 
   //
