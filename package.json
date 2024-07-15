@@ -7,7 +7,7 @@
     "bedcli": "./bin/bedcli.js"
   },
   "scripts": {
-    "build": "node _build_.js"
+    "build": "node __build__.js"
   },
   "author": "FedYou",
   "license": "MIT",
