@@ -1,6 +1,6 @@
 import "colors";
 import fs from "fs-extra";
-import yfile from "youfile";
+import youfile from "youfile";
 import YCache from "youcache";
 import { join } from "path";
 import lang from "./lang.js";
@@ -39,7 +39,7 @@ export default (answers) => {
 
     lang(cacheProject.path, configData.project);
 
-    yfile.copy(cacheProject.path, projectPath);
+    youfile.copy(cacheProject.path, projectPath);
 
     // Message
     console.new.check("Project successfully created".yellow);

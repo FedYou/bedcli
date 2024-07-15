@@ -6,6 +6,9 @@
   "bin": {
     "bedcli": "./bin/bedcli.js"
   },
+  "scripts": {
+    "build": "node _build_.js"
+  },
   "author": "FedYou",
   "license": "MIT",
   "repository": {

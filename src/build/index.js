@@ -1,4 +1,4 @@
-import yfile from "youfile";
+import youfile from "youfile";
 import YCache from "youcache";
 import compress from "../utils/compress.js";
 import { join } from "path";
@@ -142,7 +142,7 @@ export default () => {
   //
   console.new.line("Compress");
 
-  yfile.write.dir(PATH.output.build);
+  youfile.write.dir(PATH.output.build);
 
   try {
     if (

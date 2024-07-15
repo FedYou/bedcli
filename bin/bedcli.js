@@ -1,5 +1,3 @@
 #!/usr/bin/env node
-import "colors";
-import con from "../commands/index.js";
-
-con();
+import index from "../src/index.js";
+index();

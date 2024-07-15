@@ -1,10 +1,10 @@
-import yfile from "youfile";
+import youfile from "youfile";
 import existList from "../utils/existList.js";
 import "../utils/console/index.js";
 
 function func(entryPath, outputPath) {
   console.new.waitPath("Reading path", outputPath);
-  yfile.copy(entryPath, outputPath);
+  youfile.copy(entryPath, outputPath);
   console.new.clearLine();
   console.new.checkPath("Path read", outputPath);
 }

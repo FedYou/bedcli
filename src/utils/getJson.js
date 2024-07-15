@@ -1,6 +1,6 @@
-import yfile from "youfile";
+import youfile from "youfile";
 
 export default (entryPath, func) => {
-  const files = yfile.read.dir.getAllExtnameFiles(entryPath, ".json");
+  const files = youfile.read.dir.getAllExtnameFiles(entryPath, ".json");
   files.forEach((pathFile) => func(pathFile));
 };

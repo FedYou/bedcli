@@ -1,6 +1,6 @@
-import yfile from "youfile";
+import youfile from "youfile";
 import path, { join } from "path";
-import templates from "../../../templates/index.js";
+import templates from "../../templates.js";
 import { PROJECT_TYPES } from "../../utils/enum.js";
 
 function addPackage(config, cache) {
@@ -15,12 +15,12 @@ function addPackage(config, cache) {
   });
 
   delete templatePackage.list;
-  yfile.write.json(packagePath, templatePackage, 2);
+  youfile.write.json(packagePath, templatePackage, 2);
 }
 function addScript(behaviorPath, config) {
   let path = join(behaviorPath, config.scripts.entry);
   const content = "//Script file main";
-  yfile.write.file(path, content);
+  youfile.write.file(path, content);
 }
 
 export default (cache, config) => {
@@ -29,7 +29,7 @@ export default (cache, config) => {
 
   // >>Template<<
   const templateBehavior = templates.behavior;
-  yfile.copy(templateBehavior, behaviorPath);
+  youfile.copy(templateBehavior, behaviorPath);
 
   // >>If add-on script or script<<
   if (

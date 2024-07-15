@@ -1,5 +1,5 @@
 import fs from "fs-extra";
-import yfile from "youfile";
+import youfile from "youfile";
 import { basename, join } from "path";
 import { PROJECT_TYPES } from "../utils/enum.js";
 import "../utils/console/index.js";
@@ -18,7 +18,7 @@ export default (config, cache) => {
       PROJECT_TYPE === PROJECT_TYPES.SCR ||
       PROJECT_TYPE === PROJECT_TYPES.BP
     ) {
-      yfile.copy(path, join(cache.behavior, name));
+      youfile.copy(path, join(cache.behavior, name));
     }
 
     if (
@@ -26,7 +26,7 @@ export default (config, cache) => {
       PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
       PROJECT_TYPE === PROJECT_TYPES.RP
     ) {
-      yfile.copy(path, join(cache.resource, name));
+      youfile.copy(path, join(cache.resource, name));
     }
   });
 };
