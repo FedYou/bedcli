@@ -1,6 +1,6 @@
 {
   "name": "bedcli",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Minecraft bedrock creator cli",
   "type": "module",
   "bin": {
