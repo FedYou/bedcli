@@ -5,6 +5,13 @@ const PROJECT_TYPES = {
   BP: "bp",
   SCR: "scr",
 };
+const EVENTS = {
+  ADD: "add",
+  ADD_DIR: "addDir",
+  REMOVE: "unlink",
+  REMOVE_DIR: "unlinkDir",
+  CHANGE: "change",
+};
 const FOLDERS_BEHAVIOR = [
   "entities",
   "items",
@@ -64,4 +71,5 @@ export {
   FOLDERS_BEHAVIOR_OBFUSCATOR,
   FOLDERS_RESOURCE_OBFUSCATOR,
   DEPENDECIES,
+  EVENTS,
 };

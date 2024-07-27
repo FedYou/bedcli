@@ -2,8 +2,9 @@ import fs from "fs-extra";
 import { join } from "path";
 import genManifest from "../gen/manifest.js";
 import esbuild from "../utils/esbuild.js";
-import symlinkFromList from "./symlinkFromList.js";
+import copyList from "./copyList.js";
 import createManifest from "../utils/createManifest.js";
+import existRemove from "../utils/existRemove.js";
 import {
   PROJECT_TYPES,
   FOLDERS_BEHAVIOR,
@@ -15,7 +16,16 @@ import {
 export default async (config) => {
   const PROJECT_TYPE = config.project.type;
   const manifest = genManifest(config);
-
+  const EXT = {
+    resource: "-RP",
+    behavior: "-BP",
+  };
+  if (PROJECT_TYPE === PROJECT_TYPES.RP) {
+    EXT.resource = "";
+  }
+  if (PROJECT_TYPE === PROJECT_TYPES.BP) {
+    EXT.behavior = "";
+  }
   const PATH = {
     entry: {
       resource: join(process.cwd(), "RP"),
@@ -23,16 +33,17 @@ export default async (config) => {
     },
     output: {
       resource: join(
-        config.output.resource || "dist/resource",
-        config.project.name + "-RP"
+        config.output.resource,
+        config.project.name + EXT.resource
       ),
       behavior: join(
-        config.output.behavior || "dist/behavior",
-        config.project.name + "-BP"
+        config.output.behavior,
+        config.project.name + EXT.behavior
       ),
     },
   };
-
+  existRemove(PATH.output.behavior);
+  existRemove(PATH.output.resource);
   // Add Resource
   if (
     PROJECT_TYPE === PROJECT_TYPES.AD ||
@@ -41,7 +52,7 @@ export default async (config) => {
   ) {
     createManifest(PATH.output.resource, manifest.resource);
     // Folders
-    symlinkFromList({
+    copyList({
       list: FOLDERS_RESOURCE,
       project: {
         path: PATH.entry.resource,
@@ -49,7 +60,7 @@ export default async (config) => {
       },
     });
     // Files
-    symlinkFromList({
+    copyList({
       list: FILES_RESOURCE,
       project: {
         path: PATH.entry.resource,
@@ -66,7 +77,7 @@ export default async (config) => {
   ) {
     createManifest(PATH.output.behavior, manifest.behavior);
     // Folders
-    symlinkFromList({
+    copyList({
       list: FOLDERS_BEHAVIOR,
       project: {
         path: PATH.entry.behavior,
@@ -74,7 +85,7 @@ export default async (config) => {
       },
     });
     // Files
-    symlinkFromList({
+    copyList({
       list: FILES_BEHAVIOR,
       project: {
         path: PATH.entry.behavior,
