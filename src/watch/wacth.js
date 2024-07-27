@@ -3,6 +3,7 @@ import { join } from "path";
 import existRemove from "../utils/existRemove.js";
 import { EVENTS, PROJECT_TYPES } from "../utils/enum.js";
 import "../utils/console/index.js";
+import scripts from "./scripts.js";
 
 let PATH;
 function relativePath(path, output) {
@@ -41,7 +42,14 @@ export default (config, path, event) => {
     },
   };
   let dest;
-
+  console.new.waitPath(`There was a ${event.yellow} in the path `, path.red);
+  if (
+    PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
+    (PROJECT_TYPE === PROJECT_TYPES.SCR && path.endsWith(".js"))
+  ) {
+    scripts(config, PATH);
+    return;
+  }
   if (
     PROJECT_TYPE === PROJECT_TYPES.AD ||
     PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
@@ -65,5 +73,4 @@ export default (config, path, event) => {
   } else if (EVENTS.ADD === event || EVENTS.CHANGE === event) {
     youfile.copy(path, dest);
   }
-  console.new.waitPath(`There was a ${event.yellow} in the path `, path.red);
 };

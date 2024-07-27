@@ -12,6 +12,7 @@ import {
   FILES_BEHAVIOR,
   FILES_RESOURCE,
 } from "../utils/enum.js";
+import scripts from "./scripts.js";
 
 export default async (config) => {
   const PROJECT_TYPE = config.project.type;
@@ -98,15 +99,6 @@ export default async (config) => {
     PROJECT_TYPE === PROJECT_TYPES.ADSCR ||
     PROJECT_TYPE === PROJECT_TYPES.SCR
   ) {
-    if (config.scripts.language !== "javascript") {
-      console.new.error(
-        `Error the language "${config.scripts.language}" is not supported`
-      );
-    }
-    const entry = join(PATH.entry.behavior, config.scripts.entry);
-    const output = join(PATH.output.behavior, config.scripts.entry);
-    if (!fs.existsSync(entry))
-      console.new.error(`The file "${entry}" does not exist`);
-    esbuild(entry, output);
+    scripts(config, PATH);
   }
 };
