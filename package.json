@@ -6,9 +6,7 @@
   "bin": {
     "bedcli": "./bin/bedcli.js"
   },
-  "scripts": {
-    "build": "node __build__.js"
-  },
+  "scripts": {},
   "author": "FedYou",
   "license": "MIT",
   "repository": {
@@ -30,9 +28,9 @@
     "chokidar": "^3.6.0",
     "cli-select": "^1.1.2",
     "colors": "^1.4.0",
+    "commander": "^12.1.0",
     "esbuild": "^0.21.5",
     "fs-extra": "^11.2.0",
-    "inquirer": "^9.3.1",
     "prompt-sync": "^4.2.0",
     "uuid": "^10.0.0",
     "youcache": "^1.0.2",
