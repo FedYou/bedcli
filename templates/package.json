@@ -1,8 +1,0 @@
-{
-  "type": "module",
-  "list": {
-    "@minecraft/server": "^1.11.0",
-    "@minecraft/server-ui": "^1.1.0"
-  },
-  "dependencies": {}
-}
