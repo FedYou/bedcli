@@ -1,46 +1,51 @@
 {
-  "resource": [
-    "animation_controllers",
-    "animations",
-    "attachables",
-    "entity",
-    "fogs",
-    "models",
-    "particles",
-    "render_controls",
-    "texts",
-    "textures",
-    "ui",
-    "sounds",
-    "block_culling",
-    "materials",
-    "biomes_client.json",
-    "blocks.json",
-    "content.json",
-    "pack_icon.png",
-    "sounds.json",
-    "splashes.json",
-    "manifest.json"
-  ],
-  "behavior": [
-    "entities",
-    "items",
-    "loot_tables",
-    "recipes",
-    "spawn_rules",
-    "trading",
-    "blocks",
-    "texts",
-    "structures",
-    "feature_rules",
-    "features",
-    "cameras",
-    "dialogue",
-    "dimensions",
-    "functions",
-    "animations",
-    "animation_controllers",
-    "pack_icon.png",
-    "manifest.json"
-  ]
+  "resource": {
+    "files": [
+      "biomes_client.json",
+      "blocks.json",
+      "content.json",
+      "pack_icon.png",
+      "sounds.json",
+      "splashes.json",
+      "manifest.json"
+    ],
+    "folders": [
+      "animation_controllers",
+      "animations",
+      "attachables",
+      "entity",
+      "fogs",
+      "models",
+      "particles",
+      "render_controls",
+      "texts",
+      "textures",
+      "ui",
+      "sounds",
+      "block_culling",
+      "materials"
+    ]
+  },
+  "behavior": {
+    "files": ["pack_icon.png", "manifest.json"],
+    "folders": [
+      "entities",
+      "items",
+      "loot_tables",
+      "recipes",
+      "spawn_rules",
+      "trading",
+      "blocks",
+      "texts",
+      "structures",
+      "feature_rules",
+      "features",
+      "cameras",
+      "dialogue",
+      "dimensions",
+      "functions",
+      "animations",
+      "animation_controllers"
+    ]
+  }
 }

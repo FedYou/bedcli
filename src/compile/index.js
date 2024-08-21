@@ -1,23 +1,15 @@
 import fs from "fs-extra";
 import console from "../utils/console/index.js";
-import { join, basename } from "path";
+import { join, basename, dirname } from "path";
 import youfile from "youfile";
 import { Cache } from "youcache";
 import { MANIFEST_TYPES } from "../enum.js";
 import dataToCompile from "../utils/manifest/dataToCompile.js";
 import dCompile from "../../json/compile.json" assert { type: "json" };
+import lang from "./lang.js";
+import copyFiles from "./copyFiles.js";
 
-function copyToCache(listPath, entryPath, ouputPath) {
-  youfile.write.dir(ouputPath);
-  listPath.forEach((fileName) => {
-    const filePath = join(entryPath, fileName);
-    if (fs.pathExistsSync(filePath)) {
-      youfile.copy(filePath, join(ouputPath, basename(fileName)));
-    }
-  });
-}
-
-export default (packPath) => {
+export default async (packPath) => {
   const manifestPath = join(packPath, "manifest.json");
 
   if (!fs.pathExistsSync(manifestPath)) {
@@ -26,11 +18,10 @@ export default (packPath) => {
   const manifest = youfile.read.json(manifestPath);
   const cache = new Cache("bedcli");
   const data = dataToCompile(manifest);
-  const TYPE = data.type;
 
   let files;
 
-  switch (TYPE) {
+  switch (data.type) {
     case MANIFEST_TYPES.RESOURCES:
       files = dCompile.resource;
       break;
@@ -46,7 +37,34 @@ export default (packPath) => {
       break;
   }
 
-  copyToCache(files, packPath, cache.path);
+  files.folders.forEach(async (folderName) => {
+    const folderPath = join(packPath, folderName);
+    if (fs.pathExistsSync(folderPath)) {
+      const filesPath = youfile.read.dir.getAllFiles(folderPath);
+      const filesOutputPath = filesPath.map((path) =>
+        join(cache.path, path.replace(packPath, ""))
+      );
+      await copyFiles(filesPath, filesOutputPath);
+    }
+  });
+
+  (async () => {
+    const filesPath = files.files
+      .map((path) => {
+        const file = join(packPath, path);
+        if (fs.pathExistsSync(file)) {
+          return file;
+        }
+      })
+      .filter(Boolean);
+
+    const filesOutputPath = filesPath.map((path) => {
+      console.log(path);
+      console.log(path.replace(packPath, ""));
+      return join(cache.path, path.replace(packPath, ""));
+    });
+    await copyFiles(filesPath, filesOutputPath);
+  })();
 
   const subpacksPath = join(packPath, "subpacks");
   const subpacksCachePath = join(cache.path, "subpacks");
@@ -57,17 +75,23 @@ export default (packPath) => {
         return folder_name;
       }
     });
-    existingFolders.forEach((folderName) => {
+    existingFolders.forEach(async (folderName) => {
       const entryPath = join(subpacksPath, folderName);
       const ouputPath = join(subpacksCachePath, folderName);
-      copyToCache(files, entryPath, ouputPath);
+
+      const filesPath = youfile.read.dir.getAllFiles(entryPath);
+      const filesOutputPath = filesPath.map((path) =>
+        join(ouputPath, path.replace(packPath, ""))
+      );
+
+      await copyFiles(filesPath, filesOutputPath);
     });
   }
 
-  // Minify json
-  const jsonFiles = youfile.read.dir.getAllExtnameFiles(cache.path, ".json");
-
-  jsonFiles.forEach((filePath) => {
-    youfile.write.json(filePath, youfile.read.json5(filePath));
-  });
+  //
+  const langPath = join(packPath, "texts");
+  const langCachePath = join(cache.path, "texts");
+  if (fs.pathExistsSync(langPath)) {
+    lang(langPath, langCachePath);
+  }
 };
