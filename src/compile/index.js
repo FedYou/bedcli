@@ -5,86 +5,61 @@ import youfile from "youfile";
 import { Cache } from "youcache";
 import { MANIFEST_TYPES } from "../enum.js";
 import dataToCompile from "../utils/manifest/dataToCompile.js";
-import dCompile from "../../json/compile.json" assert { type: "json" };
+import compilePath from "../../json/compile.json" assert { type: "json" };
 import lang from "./lang.js";
 import copyFiles from "./copyFiles.js";
+import getFiles from "./getFiles.js";
+import subpack from "./subpack.js";
 
-export default async (packPath) => {
+export default async (packPath, json = null) => {
+  const cache = new Cache("bedcli");
   const manifestPath = join(packPath, "manifest.json");
 
-  if (!fs.pathExistsSync(manifestPath)) {
-    console.error("The manifest.json file does not exist.");
+  let manifest;
+  if (null) {
+    manifest = json;
+    manifest = youfile.write.json(join(cache.path, "manifest.json", json));
+  } else {
+    if (!fs.pathExistsSync(manifestPath)) {
+      console.error("The manifest.json file does not exist.");
+    }
+    manifest = youfile.read.json(manifestPath);
   }
-  const manifest = youfile.read.json(manifestPath);
-  const cache = new Cache("bedcli");
-  const data = dataToCompile(manifest);
+  const DATA = dataToCompile(manifest);
 
-  let files;
+  let PATH;
 
-  switch (data.type) {
+  switch (DATA.type) {
     case MANIFEST_TYPES.RESOURCES:
-      files = dCompile.resource;
+      PATH = compilePath.resource;
       break;
     case MANIFEST_TYPES.DATA:
     case MANIFEST_TYPES.DATA_SCRIPT:
-      files = dCompile.behavior;
+      PATH = compilePath.behavior;
       break;
     case MANIFEST_TYPES.SCRIPT:
-      files = dCompile.behavior;
+      PATH = compilePath.behavior;
       break;
     case MANIFEST_TYPES.SKIN:
-      files = dCompile.resource;
+      PATH = compilePath.resource;
       break;
   }
 
-  files.folders.forEach(async (folderName) => {
-    const folderPath = join(packPath, folderName);
-    if (fs.pathExistsSync(folderPath)) {
-      const filesPath = youfile.read.dir.getAllFiles(folderPath);
-      const filesOutputPath = filesPath.map((path) =>
-        join(cache.path, path.replace(packPath, ""))
-      );
-      await copyFiles(filesPath, filesOutputPath);
-    }
-  });
+  const filesList = getFiles({ packPath, cachePath: cache.path, path: PATH });
 
-  (async () => {
-    const filesPath = files.files
-      .map((path) => {
-        const file = join(packPath, path);
-        if (fs.pathExistsSync(file)) {
-          return file;
-        }
-      })
-      .filter(Boolean);
+  for (const file of filesList) {
+    await copyFiles(file.path, file.output);
+  }
 
-    const filesOutputPath = filesPath.map((path) => {
-      console.log(path);
-      console.log(path.replace(packPath, ""));
-      return join(cache.path, path.replace(packPath, ""));
-    });
-    await copyFiles(filesPath, filesOutputPath);
-  })();
-
-  const subpacksPath = join(packPath, "subpacks");
-  const subpacksCachePath = join(cache.path, "subpacks");
-
-  if (fs.pathExistsSync(subpacksPath) && manifest.subpacks.length > 0) {
-    const existingFolders = manifest.subpacks.map(({ folder_name }) => {
-      if (fs.pathExistsSync(join(subpacksPath, folder_name))) {
-        return folder_name;
-      }
-    });
-    existingFolders.forEach(async (folderName) => {
-      const entryPath = join(subpacksPath, folderName);
-      const ouputPath = join(subpacksCachePath, folderName);
-
-      const filesPath = youfile.read.dir.getAllFiles(entryPath);
-      const filesOutputPath = filesPath.map((path) =>
-        join(ouputPath, path.replace(packPath, ""))
-      );
-
-      await copyFiles(filesPath, filesOutputPath);
+  if (
+    fs.pathExistsSync(join(packPath, "subpacks")) &&
+    manifest.subpacks?.length > 0
+  ) {
+    await subpack({
+      entry: join(packPath, "subpacks"),
+      output: join(cache.path, "subpacks"),
+      manifest,
+      path: PATH,
     });
   }
 
