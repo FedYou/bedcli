@@ -6,7 +6,9 @@
   "bin": {
     "bedcli": "./bin/bedcli.js"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "node __build__.js && chmod +x dist/bin/bedcli.js"
+  },
   "author": "FedYou",
   "license": "MIT",
   "repository": {
@@ -36,5 +38,8 @@
     "uuid": "^10.0.0",
     "youcache": "^1.0.3",
     "youfile": "^1.0.8"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.1"
   }
 }
