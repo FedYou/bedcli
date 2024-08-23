@@ -12,14 +12,25 @@ export default async ({ entry, output, manifest, path }) => {
       };
     })
     .filter((folder) => fs.pathExistsSync(folder.path));
-  const allFiles = [];
+  const allFiles = { png: [], files: [] };
 
   for (const subpack of existingFolders) {
-    allFiles.push(
-      ...getFiles({ packPath: subpack.path, cachePath: subpack.output, path })
-    );
+    const list = getFiles({
+      packPath: subpack.path,
+      cachePath: subpack.output,
+      path,
+    });
+    allFiles.png.push(...list.png);
+    allFiles.files.push(...list.files);
   }
-  for (const file of allFiles) {
-    await copyFiles(file.path, file.output);
+
+  const promises = [];
+
+  for (const file of allFiles.files) {
+    promises.push(copyFiles(file.path, file.output));
   }
+  for (const file of allFiles.png) {
+    promises.push(copyFiles(file.path, file.output));
+  }
+  await Promise.all(promises);
 };

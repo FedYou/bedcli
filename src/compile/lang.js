@@ -28,9 +28,11 @@ function minifyLang(entryFile, ouputFile) {
 export default (entryFolder, ouputFolder) => {
   youfile.write.dir(ouputFolder);
   const langFiles = youfile.read.dir.getExtnameFiles(entryFolder, ".lang");
-
-  langFiles.forEach(async (filePath) => {
-    const ouputFile = join(ouputFolder, basename(filePath));
-    await minifyLang(filePath, ouputFile);
+  return new Promise((resolve) => {
+    langFiles.forEach(async (filePath) => {
+      const ouputFile = join(ouputFolder, basename(filePath));
+      await minifyLang(filePath, ouputFile);
+      resolve();
+    });
   });
 };

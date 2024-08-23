@@ -24,14 +24,15 @@
     "script api"
   ],
   "dependencies": {
-    "archiver": "^7.0.1",
-    "chokidar": "^3.6.0",
+    "adm-zip": "^0.5.15",
     "cli-select": "^1.1.2",
     "colors": "^1.4.0",
     "commander": "^12.1.0",
     "esbuild": "^0.21.5",
+    "fast-json-parse": "^1.0.3",
     "fs-extra": "^11.2.0",
     "prompt-sync": "^4.2.0",
+    "sharp": "^0.33.5",
     "uuid": "^10.0.0",
     "youcache": "^1.0.3",
     "youfile": "^1.0.8"

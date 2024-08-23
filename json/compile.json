@@ -17,7 +17,7 @@
       "fogs",
       "models",
       "particles",
-      "render_controls",
+      "render_controllers",
       "texts",
       "textures",
       "ui",

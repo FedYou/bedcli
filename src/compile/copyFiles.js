@@ -1,33 +1,27 @@
 import youfile from "youfile";
-
-const MAX_CONCURRENT_OPERATIONS = 100;
+import sharp from "sharp";
+import { dirname } from "path";
+import json from "./json.js";
 
 async function processFile(path, outputPath) {
-  if (outputPath.endsWith(".json")) {
-    youfile.write.json(outputPath, youfile.read.json5(path));
+  if (path.endsWith(".json")) {
+    await json(path, outputPath);
+  } else if (path.endsWith(".png")) {
+    youfile.write.dir(dirname(outputPath));
+    await sharp(path)
+      .png({
+        compressionLevel: 9,
+        quality: 100,
+      })
+      .toFile(outputPath);
   } else {
     youfile.copy(path, outputPath);
   }
 }
-
 export default async (filesPath, filesOutputPath) => {
-  let index = 0;
-
-  async function processBatch() {
-    const promises = [];
-    for (
-      let i = 0;
-      i < MAX_CONCURRENT_OPERATIONS && index < filesPath.length;
-      i++, index++
-    ) {
-      promises.push(processFile(filesPath[index], filesOutputPath[index]));
-    }
-    await Promise.all(promises);
+  const promises = [];
+  for (let x = 0; x < filesPath.length; x++) {
+    promises.push(processFile(filesPath[x], filesOutputPath[x]));
   }
-
-  const batchPromises = [];
-  while (index < filesPath.length) {
-    batchPromises.push(processBatch());
-  }
-  await Promise.all(batchPromises);
+  await Promise.all(promises);
 };

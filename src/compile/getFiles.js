@@ -3,14 +3,24 @@ import { join } from "path";
 import youfile from "youfile";
 
 function byFolders(folders, packPath, cachePath) {
-  return folders
+  const png = [];
+  const files = folders
     .map((folderName) => {
       const folderPath = join(packPath, folderName);
       if (fs.pathExistsSync(folderPath)) {
-        const path = youfile.read.dir.getAllFiles(folderPath);
+        const pngPath = youfile.read.dir.getAllExtnameFiles(folderPath, ".png");
+        const pngOutput = pngPath.map((path) =>
+          join(cachePath, path.replace(packPath, ""))
+        );
+        const path = youfile.read.dir
+          .getAllFiles(folderPath)
+          .filter((e) => !e.endsWith(".png"))
+          .filter((e) => !e.endsWith(".lang"));
+
         const output = path.map((path) =>
           join(cachePath, path.replace(packPath, ""))
         );
+        png.push({ path: pngPath, output: pngOutput });
         return {
           path,
           output,
@@ -18,6 +28,7 @@ function byFolders(folders, packPath, cachePath) {
       }
     })
     .filter(Boolean);
+  return { png, files };
 }
 function byList(files, packPath, cachePath) {
   const path = files
@@ -30,11 +41,22 @@ function byList(files, packPath, cachePath) {
   const output = path.map((path) => {
     return join(cachePath, path.replace(packPath, ""));
   });
-  return [{ path, output }];
+  const pngPath = path.filter((e) => e.endsWith(".png"));
+  const pngOutput = pngPath.map((path) =>
+    join(cachePath, path.replace(packPath, ""))
+  );
+  return {
+    png: [{ path: pngPath, output: pngOutput }],
+    files: [{ path, output }],
+  };
 }
 
 export default ({ packPath, cachePath, path }) => {
   const folders = byFolders(path.folders, packPath, cachePath);
   const files = byList(path.files, packPath, cachePath);
-  return folders.concat(files);
+
+  folders.files.push(...files.files);
+  folders.png.push(...files.png);
+
+  return folders;
 };

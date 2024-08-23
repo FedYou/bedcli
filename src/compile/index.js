@@ -10,6 +10,7 @@ import lang from "./lang.js";
 import copyFiles from "./copyFiles.js";
 import getFiles from "./getFiles.js";
 import subpack from "./subpack.js";
+import compress from "../utils/compress.js";
 
 export default async (packPath, json = null) => {
   const cache = new Cache("bedcli");
@@ -47,26 +48,37 @@ export default async (packPath, json = null) => {
 
   const filesList = getFiles({ packPath, cachePath: cache.path, path: PATH });
 
-  for (const file of filesList) {
-    await copyFiles(file.path, file.output);
+  const promises = [];
+
+  for (const file of filesList.files) {
+    promises.push(copyFiles(file.path, file.output));
+  }
+
+  for (const file of filesList.png) {
+    promises.push(copyFiles(file.path, file.output));
   }
 
   if (
     fs.pathExistsSync(join(packPath, "subpacks")) &&
     manifest.subpacks?.length > 0
   ) {
-    await subpack({
-      entry: join(packPath, "subpacks"),
-      output: join(cache.path, "subpacks"),
-      manifest,
-      path: PATH,
-    });
+    promises.push(
+      subpack({
+        entry: join(packPath, "subpacks"),
+        output: join(cache.path, "subpacks"),
+        manifest,
+        path: PATH,
+      })
+    );
   }
 
-  //
   const langPath = join(packPath, "texts");
   const langCachePath = join(cache.path, "texts");
   if (fs.pathExistsSync(langPath)) {
-    lang(langPath, langCachePath);
+    promises.push(lang(langPath, langCachePath));
   }
+  await Promise.all(promises);
+
+  const zipName = `${DATA.name} V${DATA.version}`;
+  compress(cache.path, zipName);
 };
