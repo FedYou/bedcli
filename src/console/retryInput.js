@@ -1,3 +1,4 @@
+import readline from "readline";
 import input from "./input.js";
 export default function retryInput(message) {
   const data = input(message);

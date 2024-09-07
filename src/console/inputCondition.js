@@ -1,3 +1,5 @@
+import readline from "readline";
+import input from "./input.js";
 export default function inputCondition(message, condition = () => true) {
   const data = input(message);
   if (!condition(data)) {
