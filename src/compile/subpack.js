@@ -3,7 +3,7 @@ import { join } from "path";
 import getFiles from "./getFiles.js";
 import copyFiles from "./copyFiles.js";
 
-export default async ({ entry, output, manifest, path }) => {
+export default async ({ entry, output, manifest, path, onProgress }) => {
   const existingFolders = manifest.subpacks
     .map(({ folder_name }) => {
       return {
@@ -27,10 +27,10 @@ export default async ({ entry, output, manifest, path }) => {
   const promises = [];
 
   for (const file of allFiles.files) {
-    promises.push(copyFiles(file.path, file.output));
+    promises.push(copyFiles(file.path, file.output, onProgress));
   }
   for (const file of allFiles.png) {
-    promises.push(copyFiles(file.path, file.output));
+    promises.push(copyFiles(file.path, file.output, onProgress));
   }
   await Promise.all(promises);
 };
