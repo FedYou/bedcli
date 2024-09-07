@@ -37,6 +37,5 @@ program
   )
   .action((options) => {
     pack(options.path);
-    // setTimeout(() => {}, 5000000);
   });
 program.parse(process.argv);
