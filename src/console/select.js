@@ -1,16 +1,11 @@
-import "colors";
-import cliSelect from "cli-select";
-
-export default async (values = []) => {
-  return cliSelect({
-    selected: ">".yellow.bold,
-    unselected: "~".bold,
-    values,
-    valueRenderer: (value, selected) => {
-      if (selected) {
-        return value.underline.yellow;
-      }
-      return value;
-    },
+import enquirer from "enquirer";
+export default async ({ message = "", choices = [] }) => {
+  const prompt = await enquirer.prompt({
+    type: "select",
+    prefix: "~$".blue,
+    name: "value",
+    message,
+    choices,
   });
+  return prompt.value;
 };
