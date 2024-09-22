@@ -1,5 +1,10 @@
 import enquirer from "enquirer";
-export default async ({ message, validate = () => true, retry = false }) => {
+export default async ({
+  message,
+  validate = () => true,
+  retry = false,
+  retryMassage = "Please enter a value.",
+}) => {
   if (retry) {
     validate = (value) => {
       if (
@@ -8,7 +13,7 @@ export default async ({ message, validate = () => true, retry = false }) => {
         value === undefined ||
         value === ""
       ) {
-        return "Please enter a value.";
+        return retryMassage;
       }
       return true;
     };

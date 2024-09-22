@@ -1,6 +1,11 @@
 import enquirer from "enquirer";
 
-export default async ({ message = "", choices = [], retry = false }) => {
+export default async ({
+  message = "",
+  choices = [],
+  retry = false,
+  retryMassage = "Please select at least one option.",
+}) => {
   const prompt = await enquirer.prompt({
     type: "multiselect",
     name: "value",
@@ -9,7 +14,7 @@ export default async ({ message = "", choices = [], retry = false }) => {
     validate: (value) => {
       if (retry) {
         if (value.length === 0) {
-          return "Please select at least one option.";
+          return retryMassage;
         }
       }
       return true;
