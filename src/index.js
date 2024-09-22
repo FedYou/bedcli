@@ -1,8 +1,7 @@
 import { Command } from "commander";
-import youfile from "youfile";
-import { join } from "path";
 import packAge from "../package.json" assert { type: "json" };
 import pack from "./commands/pack.js";
+import create from "./commands/create.js";
 const program = new Command();
 const version = packAge.version;
 const description = packAge.description;
@@ -11,7 +10,9 @@ program.version(version).description(description);
 program
   .command("create")
   .description("Create a new project")
-  .action(() => {});
+  .action(() => {
+    create();
+  });
 program
   .command("build")
   .description("Package your project")

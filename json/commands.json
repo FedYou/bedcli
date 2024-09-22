@@ -1,0 +1,45 @@
+{
+  "create": {
+    "dependencieServer": [
+      "0.1.0",
+      "1.0.0",
+      "1.1.0",
+      "1.2.0",
+      "1.3.0",
+      "1.4.0",
+      "1.5.0",
+      "1.6.0",
+      "1.7.0",
+      "1.8.0",
+      "1.9.0",
+      "1.10.0",
+      "1.11.0",
+      "1.14.0-beta"
+    ],
+    "dependencieServerUi": ["0.1.0", "1.0.0", "1.1.0", "1.2.0", "1.3.0-beta"],
+    "dependencies": ["@minecraft/server", "@minecraft/server-ui"],
+    "typeProject": [
+      { "message": "Add-on", "value": "add-on" },
+      {
+        "message": "Add-on & Script",
+        "value": "add-on:script"
+      },
+      { "message": "Script", "value": "script" },
+      { "message": "Resources", "value": "resources" },
+      { "message": "Behavior", "value": "data" }
+    ],
+    "language": [
+      { "message": "Javascript", "value": "js" },
+      { "message": "TypeScript", "value": "ts" }
+    ],
+    "minEngineVersion": [
+      { "message": "v1.20.0", "value": [1, 20, 0] },
+      { "message": "v1.20.10", "value": [1, 20, 10] },
+      { "message": "v1.20.40", "value": [1, 20, 40] },
+      { "message": "v1.20.60", "value": [1, 20, 60] },
+      { "message": "v1.20.81", "value": [1, 20, 81] },
+      { "message": "v1.21.0", "value": [1, 21, 0] },
+      { "message": "v1.21.10", "value": [1, 21, 10] }
+    ]
+  }
+}

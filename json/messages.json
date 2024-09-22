@@ -1,0 +1,18 @@
+{
+  "input": {
+    "projectName": "Project name",
+    "projectDescription": "Project description",
+    "author": "Name of author(s) [Comma separated]",
+    "minEngineVersion": "Min engine version",
+    "typeProject": "Project type",
+    "language": "Language",
+    "dependencies": "Dependencies",
+    "dependencieServer": "Select the version of @minecraft/server",
+    "dependencieServerUi": "Select the version of @minecraft/server-ui"
+  },
+  "validate": {
+    "projectName": "The project name cannot be empty or contain only spaces.",
+    "author": "The name(s) of the author(s) cannot be empty or contain only spaces.",
+    "dependencies": "You must select at least one dependency."
+  }
+}
