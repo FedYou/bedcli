@@ -2,7 +2,7 @@ import CONFIG from "../config/create.js";
 import input from "../console/input.js";
 import select from "../console/select.js";
 import multiSelect from "../console/multiSelect.js";
-
+import create from "../create/index.js";
 async function getDependencies(answers) {
   const NAMES = {
     server: "@minecraft/server",
@@ -13,7 +13,7 @@ async function getDependencies(answers) {
   if (!answers.dependencies) return dependencies;
 
   for (const dependency of answers.dependencies) {
-    if (!dependency === NAMES.server) {
+    if (dependency === NAMES.server) {
       dependencies[NAMES.server] = await select(CONFIG.dependencieServer);
     }
     if (dependency === NAMES.serverUi) {
@@ -38,4 +38,5 @@ export default async () => {
   }
 
   answers.dependencies = await getDependencies(answers);
+  create(answers);
 };
