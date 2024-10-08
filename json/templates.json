@@ -7,7 +7,7 @@
     },
     {
       "path": "texts/en_US.lang",
-      "content": "###---Pack---\n\npack.name=\\uD835\\uDC00\npack.description=\\uD835\\uDC01\n\n###---Pack---"
+      "content": "###---Pack---\n\npack.name={{name}}\npack.description={{description}}\n\n###---Pack---"
     },
     {
       "path": "texts/language_names.json",
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "path": "languages.json",
+      "path": "texts/languages.json",
       "content": [
         "en_US",
         "en_GB",
@@ -86,7 +86,7 @@
     {
       "path": "textures/item_texture.json",
       "content": {
-        "resource_pack_name": "",
+        "resource_pack_name": "{{name}}",
         "texture_name": "atlas.items",
         "texture_data": {}
       }
@@ -94,7 +94,7 @@
     {
       "path": "textures/terrain_texture.json",
       "content": {
-        "resource_pack_name": "",
+        "resource_pack_name": "{{name}}",
         "texture_name": "atlas.terrain",
         "padding": 8,
         "num_mip_levels": 4,
