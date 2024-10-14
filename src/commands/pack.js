@@ -8,5 +8,5 @@ export default (folderPath) => {
   } else {
     completePath = path.resolve(folderPath);
   }
-  compile(completePath);
+  compile({ packPath: completePath });
 };

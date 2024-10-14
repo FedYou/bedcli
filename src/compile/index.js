@@ -14,16 +14,16 @@ import compress from "../utils/compress.js";
 import getSize from "../utils/getSize.js";
 import getTime from "../utils/getTime.js";
 
-export default async (packPath, json = null) => {
+export default async ({ packPath, json = null, name = null }) => {
   const temp = { time: {}, size: {}, getTime: {} };
   const intf = console.interface();
   const cache = new Cache("bedcli");
   const manifestPath = join(packPath, "manifest.json");
 
   let manifest;
-  if (null) {
+  if (json) {
     manifest = json;
-    manifest = youfile.write.json(join(cache.path, "manifest.json", json));
+    youfile.write.json(join(cache.path, "manifest.json"), json);
   } else {
     if (!fs.pathExistsSync(manifestPath)) {
       console.error("The manifest.json file does not exist.");
@@ -38,6 +38,7 @@ export default async (packPath, json = null) => {
   };
   temp.size["pack"] = await getSize(packPath);
   const DATA = dataToCompile(manifest);
+  DATA.name = name ?? DATA.name;
   intf.face(`Starting compilation`.yellow.bold);
 
   intf.message("~Pack".bold.dim);
@@ -100,8 +101,8 @@ export default async (packPath, json = null) => {
   intf.text("~Compressing files...".bold);
 
   temp.getTime["compression"] = getTime();
-
-  const zipName = `${DATA.name} V${DATA.version}`;
+  youfile.write.dir("dist");
+  const zipName = `dist/${DATA.name} V${DATA.version}[${DATA.type}].mcpack`;
   compress(cache.path, zipName);
   temp.time["compression"] = temp.getTime["compression"].end();
 
