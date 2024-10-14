@@ -1,5 +1,9 @@
 import readline from "readline";
 import face from "./face.js";
+function exit() {
+  process.stdout.write("\x1b[?25h");
+  process.exit(0);
+}
 class create {
   #rl;
   constructor() {
@@ -9,7 +13,8 @@ class create {
     });
     this.#rl.pause();
     process.stdout.write("\x1b[?25l");
-    process.on("exit", () => process.stdout.write("\x1b[?25h"));
+    process.on("exit", () => exit());
+    process.on("SIGINT", () => exit());
   }
   message(...message) {
     console.log(message.join("\t"));
