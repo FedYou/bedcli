@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import compile from "../compile/index.js";
 import path from "path";
 import console from "../utils/console/index.js";
-import verifyReadConfig from "./verifyReadConfig.js";
+import verifyReadConfig from "../utils/verifyReadConfig.js";
 import manifestGen from "../gen/manifest.js";
 
 let name;

@@ -1,8 +1,8 @@
 import fs from "fs-extra";
 import youfile from "youfile";
-import "../utils/console/index.js";
+import "./console/index.js";
 import { PROJECT_TYPES } from "../enum.js";
-import console from "../utils/console/index.js";
+import console from "./console/index.js";
 
 export default () => {
   const path = "bed.config.json";
