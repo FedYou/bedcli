@@ -29,6 +29,7 @@
     "adm-zip": "^0.5.15",
     "colors": "^1.4.0",
     "commander": "^12.1.0",
+    "conf": "^13.0.1",
     "enquirer": "^2.4.1",
     "esbuild": "^0.21.5",
     "fast-json-parse": "^1.0.3",
