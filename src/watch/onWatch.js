@@ -2,8 +2,9 @@ import console from "../utils/console/index.js";
 import { join } from "path";
 import { EVENTS_NAME } from "../enum.js";
 import debouncedCopy from "./debouncedCopy.js";
-
-export default ({ folders, event, path, mojang, config }) => {
+import esbuild from "../utils/esbuild.js";
+import getTime from "../utils/getTime.js";
+export default async ({ folders, event, path, mojang, config }) => {
   let folderOuput;
   let name;
 
@@ -35,5 +36,17 @@ export default ({ folders, event, path, mojang, config }) => {
     );
   };
 
-  debouncedCopy(event, path, output, onEnd);
+  if ((name === "behavior" && path.endsWith(".js")) || path.endsWith(".ts")) {
+    const time = getTime();
+    await esbuild(
+      join("behavior", config.scripts.entry),
+      join(folderOuput, "scripts/main.js")
+    );
+
+    console.log(
+      "~~".dim.bold,
+      "Rebuild in scripts/main.js".dim.italic,
+      time.end().dim.italic
+    );
+  } else debouncedCopy(event, path, output, onEnd);
 };

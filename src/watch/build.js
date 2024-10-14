@@ -1,13 +1,16 @@
+import fs from "fs-extra";
 import { join } from "path";
 import youfile from "youfile";
 import manifestGen from "../gen/manifest.js";
+import dataToCompile from "../utils/manifest/dataToCompile.js";
+import esbuild from "../utils/esbuild.js";
 
 function copyFile(file, output) {
   youfile.copy(file, output);
 }
 
 export default ({ config, mojang, folders }) => {
-  const manfest = manifestGen(config);
+  const manifest = manifestGen(config);
   const _manifest = "manifest.json";
   const fileList = [];
 
@@ -19,6 +22,13 @@ export default ({ config, mojang, folders }) => {
         "development_behavior_packs",
         config.project.name
       );
+
+      manifest.behavior = dataToCompile(manifest.behavior).typeScript.manifest;
+
+      esbuild(
+        join("behavior", config.scripts.entry),
+        join(folderOuput, "scripts/main.js")
+      );
     } else if (folder === "resource") {
       folderOuput = join(
         mojang,
@@ -27,8 +37,10 @@ export default ({ config, mojang, folders }) => {
       );
     }
 
-    youfile.remove(folderOuput);
-    youfile.write.json(join(folderOuput, _manifest), manfest[folder]);
+    if (fs.pathExistsSync(folderOuput)) {
+      youfile.remove(folderOuput);
+    }
+    youfile.write.json(join(folderOuput, _manifest), manifest[folder]);
 
     youfile.read.dir.getAllFiles(folder).forEach((file) => {
       const filePathRelative = file.replace(folder, "");
@@ -41,7 +53,11 @@ export default ({ config, mojang, folders }) => {
     });
   }
 
-  for (let x = 0; x < fileList.length; x++) {
-    copyFile(fileList[x].file, fileList[x].output);
+  const filteredList = fileList.filter(
+    (e) => !e.file.startsWith("behavior/scripts")
+  );
+
+  for (let x = 0; x < filteredList.length; x++) {
+    copyFile(filteredList[x].file, filteredList[x].output);
   }
 };
