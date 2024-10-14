@@ -13,17 +13,24 @@ import subpack from "./subpack.js";
 import compress from "../utils/compress.js";
 import getSize from "../utils/getSize.js";
 import getTime from "../utils/getTime.js";
+import typeScript from "../utils/manifest/typeScript.js";
+import esbuild from "../utils/esbuild.js";
 
 export default async ({ packPath, json = null, name = null }) => {
   const temp = { time: {}, size: {}, getTime: {} };
   const intf = console.interface();
   const cache = new Cache("bedcli");
   const manifestPath = join(packPath, "manifest.json");
+  let DATA;
 
   let manifest;
   if (json) {
     manifest = json;
-    youfile.write.json(join(cache.path, "manifest.json"), json);
+    DATA = dataToCompile(manifest);
+    youfile.write.json(
+      join(cache.path, "manifest.json"),
+      DATA.typeScript.manifest
+    );
   } else {
     if (!fs.pathExistsSync(manifestPath)) {
       console.error("The manifest.json file does not exist.");
@@ -37,7 +44,6 @@ export default async ({ packPath, json = null, name = null }) => {
     intf.text(message);
   };
   temp.size["pack"] = await getSize(packPath);
-  const DATA = dataToCompile(manifest);
   DATA.name = name ?? DATA.name;
   intf.face(`Starting compilation`.yellow.bold);
 
@@ -95,6 +101,19 @@ export default async ({ packPath, json = null, name = null }) => {
   if (fs.pathExistsSync(langPath)) {
     promises.push(lang(langPath, langCachePath));
   }
+
+  if (
+    DATA.type === MANIFEST_TYPES.DATA ||
+    DATA.type === MANIFEST_TYPES.DATA_SCRIPT
+  ) {
+    const entry = join(packPath, DATA.typeScript.entry);
+    const output = join(cache.path, "scripts/main.js");
+    if (!fs.existsSync(entry))
+      console.error(`The file "${entry}" does not exist`);
+
+    promises.push(esbuild(entry, output));
+  }
+
   await Promise.all(promises);
   intf.clearLine();
   temp.time["compilation"] = temp.getTime["compilation"].end();

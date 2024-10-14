@@ -26,4 +26,5 @@ const EVENTS_NAME = {
   unlinkDir: "REMOVE_DIR",
   change: "CHANGE",
 };
-export { MANIFEST_TYPES, PROJECT_TYPES, EVENTS, EVENTS_NAME };
+const DEPENDECIES = ["@minecraft/server", "@minecraft/server-ui"];
+export { MANIFEST_TYPES, PROJECT_TYPES, EVENTS, EVENTS_NAME, DEPENDECIES };
