@@ -2,6 +2,7 @@ import { Command } from "commander";
 import packAge from "../package.json" assert { type: "json" };
 import pack from "./commands/pack.js";
 import create from "./commands/create.js";
+import build from "./build/index.js";
 const program = new Command();
 const version = packAge.version;
 const description = packAge.description;
@@ -16,7 +17,9 @@ program
 program
   .command("build")
   .description("Package your project")
-  .action(() => {});
+  .action(() => {
+    build();
+  });
 program
   .command("watch")
   .description("Every time there are changes, pack your project for testing.")
