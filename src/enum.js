@@ -12,5 +12,18 @@ const MANIFEST_TYPES = {
   SCRIPT: "script",
   SKIN: "skin",
 };
-
-export { MANIFEST_TYPES, PROJECT_TYPES };
+const EVENTS = {
+  ADD: "add",
+  ADD_DIR: "addDir",
+  REMOVE: "unlink",
+  REMOVE_DIR: "unlinkDir",
+  CHANGE: "change",
+};
+const EVENTS_NAME = {
+  add: "ADD",
+  addDir: "ADD_DIR",
+  unlink: "REMOVE",
+  unlinkDir: "REMOVE_DIR",
+  change: "CHANGE",
+};
+export { MANIFEST_TYPES, PROJECT_TYPES, EVENTS, EVENTS_NAME };

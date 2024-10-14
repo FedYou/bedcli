@@ -27,6 +27,7 @@
   ],
   "dependencies": {
     "adm-zip": "^0.5.15",
+    "chokidar": "^4.0.1",
     "colors": "^1.4.0",
     "commander": "^12.1.0",
     "conf": "^13.0.1",
@@ -35,6 +36,7 @@
     "fast-json-parse": "^1.0.3",
     "fs-extra": "^11.2.0",
     "get-folder-size": "^5.0.0",
+    "lodash": "^4.17.21",
     "perf_hooks": "^0.0.1",
     "sharp": "^0.33.5",
     "uuid": "^10.0.0",

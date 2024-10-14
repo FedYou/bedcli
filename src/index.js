@@ -4,6 +4,7 @@ import pack from "./commands/pack.js";
 import create from "./commands/create.js";
 import build from "./build/index.js";
 import config from "./commands/config.js";
+import watch from "./watch/index.js";
 const program = new Command();
 const version = packAge.version;
 const description = packAge.description;
@@ -34,7 +35,9 @@ program
 program
   .command("watch")
   .description("Every time there are changes, pack your project for testing.")
-  .action(() => {});
+  .action(() => {
+    watch();
+  });
 
 program
   .command("pack")
