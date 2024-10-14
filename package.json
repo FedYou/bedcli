@@ -42,8 +42,5 @@
     "uuid": "^10.0.0",
     "youcache": "^1.0.3",
     "youfile": "^1.0.8"
-  },
-  "devDependencies": {
-    "@vercel/ncc": "^0.38.1"
   }
 }
