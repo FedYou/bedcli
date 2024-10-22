@@ -33,7 +33,6 @@
     "conf": "^13.0.1",
     "enquirer": "^2.4.1",
     "esbuild": "^0.21.5",
-    "fast-json-parse": "^1.0.3",
     "fs-extra": "^11.2.0",
     "get-folder-size": "^5.0.0",
     "lodash": "^4.17.21",
