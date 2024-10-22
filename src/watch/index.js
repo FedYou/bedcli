@@ -6,7 +6,6 @@ import verifyFolders from "./verifyFolders.js";
 import build from "./build.js";
 import getTime from "../utils/getTime.js";
 import onWatch from "./onWatch.js";
-import console from "../utils/console/index.js";
 
 const configGlobal = new Conf({ projectName: "bedcli" });
 const mojang = configGlobal.get("com.mojang");
