@@ -55,10 +55,6 @@ program
     "Path of your project folder can be relative as obsolete",
     "./"
   )
-  .option(
-    "--obfuscator",
-    "Obfuscates your package, but makes your package heavier."
-  )
   .action((options) => {
     pack(options.path);
   });
