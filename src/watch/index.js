@@ -1,5 +1,3 @@
-import path from "path";
-import fs from "fs-extra";
 import Conf from "conf";
 import chokidar from "chokidar";
 import console from "../utils/console/index.js";
@@ -8,11 +6,15 @@ import verifyFolders from "./verifyFolders.js";
 import build from "./build.js";
 import getTime from "../utils/getTime.js";
 import onWatch from "./onWatch.js";
+import console from "../utils/console/index.js";
 
 const configGlobal = new Conf({ projectName: "bedcli" });
 const mojang = configGlobal.get("com.mojang");
 
 export default () => {
+  if (!mojang) {
+    console.error("The com.mojang path is not defined.");
+  }
   const config = verifyReadConfig();
   const folders = verifyFolders(config);
   const wacthOptions = {
