@@ -5,6 +5,7 @@ import create from "./commands/create.js";
 import build from "./build/index.js";
 import config from "./commands/config.js";
 import watch from "./watch/index.js";
+import info from "./commands/info.js";
 const program = new Command();
 const version = packAge.version;
 const description = packAge.description;
@@ -13,7 +14,12 @@ program
   .command("config")
   .description("Edit the configuration file")
   .option("--com.mojang <path>", "Path of the mojang folder", null)
+  .option("--info", "Show configuration info")
   .action((options, cmd) => {
+    if (options.info) {
+      info();
+      return;
+    }
     if (null === options["com.mojang"]) {
       cmd.outputHelp();
       return;
