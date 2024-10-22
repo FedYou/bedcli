@@ -4,6 +4,7 @@ import youfile from "youfile";
 import manifestGen from "../gen/manifest.js";
 import dataToCompile from "../utils/manifest/dataToCompile.js";
 import esbuild from "../utils/esbuild.js";
+import removeDuplicates from "./removeDuplicates.js";
 
 function copyFile(file, output) {
   youfile.copy(file, output);
@@ -15,13 +16,11 @@ export default ({ config, mojang, folders }) => {
   const fileList = [];
 
   for (const folder of folders) {
+    let folderDev;
     let folderOuput;
     if (folder === "behavior") {
-      folderOuput = join(
-        mojang,
-        "development_behavior_packs",
-        config.project.name
-      );
+      folderDev = join(mojang, "development_behavior_packs");
+      folderOuput = join(folderDev, config.project.name);
 
       manifest.behavior = dataToCompile(manifest.behavior).typeScript.manifest;
 
@@ -30,16 +29,13 @@ export default ({ config, mojang, folders }) => {
         join(folderOuput, "scripts/main.js")
       );
     } else if (folder === "resource") {
-      folderOuput = join(
-        mojang,
-        "development_resource_packs",
-        config.project.name
-      );
+      folderDev = join(mojang, "development_resource_packs");
+      folderOuput = join(folderDev, config.project.name);
     }
-
     if (fs.pathExistsSync(folderOuput)) {
       youfile.remove(folderOuput);
     }
+    removeDuplicates(folderDev, manifest[folder].header.uuid);
     youfile.write.json(join(folderOuput, _manifest), manifest[folder]);
 
     youfile.read.dir.getAllFiles(folder).forEach((file) => {
