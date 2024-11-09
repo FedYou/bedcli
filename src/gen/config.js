@@ -12,7 +12,6 @@ export default (answers) => {
     },
     scripts: "",
     uuid: [],
-    externalFiles: [],
   };
   const PROJECT_TYPE = answers.type;
   // Authors
