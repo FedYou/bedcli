@@ -1,5 +1,5 @@
 import Conf from "conf";
-import console from "../utils/console/index.js";
+import console from "../../utils/console/index.js";
 export default () => {
   const config = new Conf({ projectName: "bedcli" });
   const mojang = config.get("com.mojang");

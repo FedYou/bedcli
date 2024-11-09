@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import Conf from "conf";
-import console from "../utils/console/index.js";
+import console from "../../utils/console/index.js";
 
 export default (folderPath) => {
   let completePath;

@@ -3,9 +3,8 @@ import packAge from "../package.json" assert { type: "json" };
 import pack from "./commands/pack.js";
 import create from "./commands/create.js";
 import build from "./build/index.js";
-import config from "./commands/config.js";
+import config from "./commands/config/index.js";
 import watch from "./watch/index.js";
-import info from "./commands/info.js";
 const program = new Command();
 const version = packAge.version;
 const description = packAge.description;
@@ -15,16 +14,20 @@ program
   .description("Edit the configuration file")
   .option("--com.mojang <path>", "Path of the mojang folder", null)
   .option("--info", "Show configuration info")
+  .option("--clear", "Clear the configuration")
   .action((options, cmd) => {
     if (options.info) {
-      info();
+      config.info();
+      return;
+    } else if (options.clear) {
+      config.clear();
       return;
     }
     if (null === options["com.mojang"]) {
       cmd.outputHelp();
       return;
     }
-    config(options["com.mojang"]);
+    config.comMojang(options["com.mojang"]);
   });
 program
   .command("create")
