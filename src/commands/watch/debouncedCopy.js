@@ -12,7 +12,7 @@ export default debounce((event, path, output, onEnd) => {
   } else if (EVENTS.ADD_DIR === event) {
     youfile.write.dir(output);
   } else if (EVENTS.ADD === event || EVENTS.CHANGE === event) {
-    youfile.copy(path, output);
+    if (fs.pathExistsSync(path)) youfile.copy(path, output);
   }
   onEnd(time.end());
 }, 100);
