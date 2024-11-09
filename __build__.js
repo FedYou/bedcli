@@ -3,37 +3,36 @@ import esbuild from "esbuild";
 import youfile from "youfile";
 import { join } from "path";
 
+console.log("Building starting...");
 if (fs.existsSync("dist")) {
   youfile.remove("dist");
 }
 const externalFiles = ["README.md", "LICENCE"];
-const external = ["path", "process"];
-const pack = youfile.read.json("package.json");
+const packAge = youfile.read.json("package.json");
 
 const entryPoints = ["src/index.js"];
-const outfile = join(".temp/esbuild", "index.js");
+const buildFile = ".temp/index.js";
+const outfile = "dist/bin/bedcli.js";
 
-for (const name in pack.dependencies) {
-  external.push(name);
-}
-if (pack.scripts) delete pack.scripts;
+if (packAge.scripts) delete packAge.scripts;
 
 esbuild.buildSync({
   entryPoints,
   bundle: true,
   minify: true,
-  outfile,
-  external,
+  outfile: buildFile,
+  packages: "external",
   format: "esm",
   platform: "node",
 });
 
-const fileJs = youfile.read.file(".temp/esbuild/index.js");
-youfile.write.file("dist/bin/bedcli.js", "#!/usr/bin/env node\n" + fileJs);
-youfile.write.json("dist/package.json", pack);
+const content = "#!/usr/bin/env node\n" + youfile.read.file(buildFile);
+youfile.write.file(outfile, content);
+youfile.write.json("dist/package.json", packAge);
 
-for (const readme of externalFiles) {
-  youfile.copy(readme, join("dist", readme));
+for (const file of externalFiles) {
+  youfile.copy(file, join("dist", file));
 }
 
 youfile.remove(".temp");
+console.log("Building finished.");
