@@ -23,6 +23,7 @@ esbuild.buildSync({
   outfile: buildFile,
   packages: "external",
   format: "esm",
+  target: "node18",
   platform: "node",
 });
 
