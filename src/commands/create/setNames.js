@@ -1,4 +1,4 @@
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter.js";
+import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter.js";
 
 export default ({ template, name, description }) => {
   return template.map((e) => {

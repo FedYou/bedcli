@@ -1,8 +1,8 @@
-import templates from "../../json/templates.json" assert { type: "json" };
-import createFiles from "../utils/createFiles.js";
-import { PROJECT_TYPES } from "../enum.js";
+import templates from "../../../json/templates.json" assert { type: "json" };
+import createFiles from "../../utils/createFiles.js";
+import { PROJECT_TYPES } from "../../enum.js";
 import path from "path";
-import config from "../gen/config.js";
+import config from "../../gen/config.js";
 import setNames from "./setNames.js";
 
 export default (answers) => {

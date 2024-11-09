@@ -1,8 +1,8 @@
-import CONFIG from "../config/create.js";
-import input from "../console/input.js";
-import select from "../console/select.js";
-import multiSelect from "../console/multiSelect.js";
-import create from "../create/index.js";
+import CONFIG from "../../config/create.js";
+import input from "../../console/input.js";
+import select from "../../console/select.js";
+import multiSelect from "../../console/multiSelect.js";
+import create from "./create.js";
 async function getDependencies(answers) {
   const NAMES = {
     server: "@minecraft/server",
