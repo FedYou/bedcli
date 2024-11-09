@@ -5,6 +5,7 @@ import manifestGen from "../../gen/manifest.js";
 import dataToCompile from "../../utils/manifest/dataToCompile.js";
 import esbuild from "../../utils/esbuild.js";
 import removeDuplicates from "./removeDuplicates.js";
+import { MANIFEST_TYPES } from "../../enum.js";
 
 function copyFile(file, output) {
   youfile.copy(file, output);
@@ -21,13 +22,14 @@ export default ({ config, mojang, folders }) => {
     if (folder === "behavior") {
       folderDev = join(mojang, "development_behavior_packs");
       folderOuput = join(folderDev, config.project.name);
-
-      manifest.behavior = dataToCompile(manifest.behavior).typeScript.manifest;
-
-      esbuild(
-        join("behavior", config.scripts.entry),
-        join(folderOuput, "scripts/main.js")
-      );
+      const DATA = dataToCompile(manifest.behavior);
+      manifest.behavior = DATA.typeScript.manifest;
+      if (DATA.type === MANIFEST_TYPES.DATA_SCRIPT) {
+        esbuild(
+          join("behavior", config.scripts.entry),
+          join(folderOuput, "scripts/main.js")
+        );
+      }
     } else if (folder === "resource") {
       folderDev = join(mojang, "development_resource_packs");
       folderOuput = join(folderDev, config.project.name);
