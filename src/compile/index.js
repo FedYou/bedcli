@@ -13,7 +13,6 @@ import subpack from "./subpack.js";
 import compress from "../utils/compress.js";
 import getSize from "../utils/getSize.js";
 import getTime from "../utils/getTime.js";
-import typeScript from "../utils/manifest/typeScript.js";
 import esbuild from "../utils/esbuild.js";
 
 export default async ({ packPath, json = null, name = null }) => {
@@ -102,10 +101,7 @@ export default async ({ packPath, json = null, name = null }) => {
     promises.push(lang(langPath, langCachePath));
   }
 
-  if (
-    DATA.type === MANIFEST_TYPES.DATA ||
-    DATA.type === MANIFEST_TYPES.DATA_SCRIPT
-  ) {
+  if (DATA.type === MANIFEST_TYPES.DATA_SCRIPT) {
     const entry = join(packPath, DATA.typeScript.entry);
     const output = join(cache.path, "scripts/main.js");
     if (!fs.existsSync(entry))
