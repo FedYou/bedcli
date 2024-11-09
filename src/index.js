@@ -4,7 +4,7 @@ import pack from "./commands/pack.js";
 import create from "./commands/create/index.js";
 import build from "./commands/build.js";
 import config from "./commands/config/index.js";
-import watch from "./watch/index.js";
+import watch from "./commands/watch/index.js";
 const program = new Command();
 const version = packAge.version;
 const description = packAge.description;

@@ -1,9 +1,9 @@
-import console from "../utils/console/index.js";
+import console from "../../utils/console/index.js";
 import { join } from "path";
-import { EVENTS_NAME } from "../enum.js";
+import { EVENTS_NAME } from "../../enum.js";
 import debouncedCopy from "./debouncedCopy.js";
-import esbuild from "../utils/esbuild.js";
-import getTime from "../utils/getTime.js";
+import esbuild from "../../utils/esbuild.js";
+import getTime from "../../utils/getTime.js";
 export default async ({ folders, event, path, mojang, config }) => {
   let folderOuput;
   let name;

@@ -1,10 +1,10 @@
 import Conf from "conf";
 import chokidar from "chokidar";
-import console from "../utils/console/index.js";
-import verifyReadConfig from "../utils/verifyReadConfig.js";
+import console from "../../utils/console/index.js";
+import verifyReadConfig from "../../utils/verifyReadConfig.js";
 import verifyFolders from "./verifyFolders.js";
 import build from "./build.js";
-import getTime from "../utils/getTime.js";
+import getTime from "../../utils/getTime.js";
 import onWatch from "./onWatch.js";
 
 const configGlobal = new Conf({ projectName: "bedcli" });

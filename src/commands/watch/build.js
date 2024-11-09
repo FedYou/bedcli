@@ -1,9 +1,9 @@
 import fs from "fs-extra";
 import { join } from "path";
 import youfile from "youfile";
-import manifestGen from "../gen/manifest.js";
-import dataToCompile from "../utils/manifest/dataToCompile.js";
-import esbuild from "../utils/esbuild.js";
+import manifestGen from "../../gen/manifest.js";
+import dataToCompile from "../../utils/manifest/dataToCompile.js";
+import esbuild from "../../utils/esbuild.js";
 import removeDuplicates from "./removeDuplicates.js";
 
 function copyFile(file, output) {

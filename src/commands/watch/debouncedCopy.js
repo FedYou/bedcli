@@ -1,9 +1,9 @@
 import fs from "fs-extra";
 import youfile from "youfile";
 import debounce from "lodash/debounce.js";
-import getTime from "../utils/getTime.js";
+import getTime from "../../utils/getTime.js";
 
-import { EVENTS } from "../enum.js";
+import { EVENTS } from "../../enum.js";
 
 export default debounce((event, path, output, onEnd) => {
   const time = getTime();

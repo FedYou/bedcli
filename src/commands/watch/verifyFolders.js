@@ -1,6 +1,6 @@
 import fs from "fs-extra";
-import console from "../utils/console/index.js";
-import { PROJECT_TYPES } from "../enum.js";
+import console from "../../utils/console/index.js";
+import { PROJECT_TYPES } from "../../enum.js";
 
 export default (config) => {
   const PROJECT_TYPE = config.project.type;
