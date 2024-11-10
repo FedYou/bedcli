@@ -35,6 +35,7 @@ export default async ({ packPath, json = null, name = null }) => {
       console.error("The manifest.json file does not exist.");
     }
     manifest = youfile.read.json(manifestPath);
+    DATA = dataToCompile(manifest);
   }
   const onProgress = (path) => {
     let message = `${"\r~Processing file ".bold} ${
