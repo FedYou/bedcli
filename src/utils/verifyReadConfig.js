@@ -15,5 +15,8 @@ export default () => {
   if (!Object.values(PROJECT_TYPES).includes(PROJECT_TYPE)) {
     console.error(`Type of project unknown >>${PROJECT_TYPE.yellow}<<`);
   }
+  if (config.project.name === "" || !config.project.name) {
+    console.error("The project name is not defined.");
+  }
   return config;
 };
